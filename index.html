@@ -23,11 +23,13 @@
   </script>
   <style>
     html { scroll-behavior: smooth; }
+    .vinyl-spin { animation: spin 4s linear infinite; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body class="bg-brandDark text-gray-200 min-h-screen flex flex-col font-sans">
 
-  <!-- Navegación -->
+  <!-- Navegación Superior -->
   <header class="bg-cardDark/95 border-b border-cardBorder sticky top-0 z-50 backdrop-blur">
     <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -52,28 +54,58 @@
 
   <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full space-y-12">
 
-    <!-- SECCIÓN REPRODUCTOR DE RADIO -->
-    <section id="reproductor" class="bg-cardDark border border-cardBorder rounded-2xl p-6 md:p-8 shadow-2xl">
-      <div class="max-w-3xl mx-auto flex flex-col items-center text-center">
-        <h2 class="text-2xl font-bold text-white mb-2">Transmisión Oficial en Directo</h2>
-        <p class="text-sm text-gray-400 mb-6">Sintoniza nuestra emisión en vivo directamente a través del reproductor:</p>
+    <!-- SECCIÓN REPRODUCTOR POP-UP (NO ABANDONA LA PÁGINA) -->
+    <section id="reproductor" class="bg-cardDark border border-cardBorder rounded-2xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
         
-        <!-- Marco Embebido del Reproductor de la Radio -->
-        <div class="w-full h-80 bg-black rounded-xl border border-cardBorder overflow-hidden shadow-inner">
-          <iframe 
-            src="http://classicradiocr.radio12345.com/" 
-            title="Reproductor Classic Radio CR"
-            class="w-full h-full border-0"
-            allow="autoplay; encrypted-media">
-          </iframe>
+        <!-- Tornamesa Vintage Animada -->
+        <div class="flex flex-col items-center justify-center p-6 bg-brandDark/70 rounded-xl border border-cardBorder">
+          <div class="relative w-52 h-52 flex items-center justify-center">
+            <div id="vinylDisc" class="w-48 h-48 rounded-full bg-zinc-950 border-4 border-zinc-800 flex items-center justify-center shadow-2xl relative transition-transform">
+              <div class="w-36 h-36 rounded-full border border-zinc-800/60 flex items-center justify-center">
+                <div class="w-24 h-24 rounded-full border border-zinc-800/40 flex items-center justify-center">
+                  <div class="w-16 h-16 rounded-full bg-goldAccent text-black flex flex-col items-center justify-center text-[9px] font-bold text-center px-1">
+                    <span>CLASSIC</span>
+                    <span>RADIO CR</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center gap-2 text-xs text-gray-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span id="playerStateText">Listo para sintonizar</span>
+          </div>
         </div>
 
-        <div class="mt-4 flex flex-wrap gap-4 items-center justify-center">
-          <a href="http://classicradiocr.radio12345.com/" target="_blank" rel="noopener noreferrer" 
-             class="bg-goldAccent hover:bg-goldHover text-black font-bold px-6 py-2.5 rounded-full text-sm flex items-center gap-2 shadow-lg transition">
-            <i class="fa-solid fa-up-right-from-square"></i> Abrir en Pestaña Directa
-          </a>
+        <!-- Panel de Control y Lanzador -->
+        <div class="flex flex-col justify-center space-y-4 text-center lg:text-left">
+          <span class="text-xs uppercase font-bold tracking-widest text-goldAccent">Emisión Oficial</span>
+          <h2 class="text-2xl md:text-3xl font-bold text-white">Lo Mejor de los 60s, 70s, 80s y 90s</h2>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            Activa la mini-consola flotante. La música se reproduce en segundo plano para que sigas interactuando con el foro y las peticiones sin que se corte el sonido.
+          </p>
+
+          <div class="pt-2 flex flex-col sm:flex-row gap-4 items-center">
+            <button onclick="launchMiniPlayer()" 
+                    class="w-full sm:w-auto bg-goldAccent hover:bg-goldHover text-black font-bold px-8 py-3.5 rounded-full text-sm flex items-center justify-center gap-3 shadow-xl transition transform hover:scale-105">
+              <i class="fa-solid fa-play text-base"></i> Conectar Mini-Consola de Audio
+            </button>
+            <span class="text-xs text-gray-500">Permanece siempre en esta web</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 pt-3 text-xs text-gray-400">
+            <div class="bg-brandDark/50 p-2.5 rounded-lg border border-cardBorder flex items-center gap-2">
+              <i class="fa-solid fa-volume-high text-goldAccent"></i>
+              <span>Audio Continuo</span>
+            </div>
+            <div class="bg-brandDark/50 p-2.5 rounded-lg border border-cardBorder flex items-center gap-2">
+              <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+              <span>Conexión Directa</span>
+            </div>
+          </div>
         </div>
+
       </div>
     </section>
 
@@ -82,9 +114,9 @@
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-cardBorder pb-4 mb-6">
         <div>
           <h2 class="text-xl font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-earth-americas text-goldAccent"></i> Registro de Oyentes
+            <i class="fa-solid fa-earth-americas text-goldAccent"></i> Registro y Métricas de Oyentes
           </h2>
-          <p class="text-sm text-gray-400">Reportes de sintonía en tiempo real.</p>
+          <p class="text-sm text-gray-400">Desglose geográfico en tiempo real.</p>
         </div>
         <div class="flex gap-4">
           <div class="bg-brandDark px-4 py-2 rounded-xl border border-cardBorder text-center">
@@ -99,8 +131,7 @@
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        <!-- Formulario de sintonía -->
+        <!-- Formulario -->
         <div class="bg-brandDark/70 p-5 rounded-xl border border-cardBorder flex flex-col justify-between">
           <div>
             <h3 class="text-sm font-bold text-white mb-3">📍 Reportar mi Sintonía</h3>
@@ -137,11 +168,11 @@
           </button>
         </div>
 
-        <!-- Desglose por continentes -->
+        <!-- Barras por Continente -->
         <div class="lg:col-span-2 bg-brandDark/70 p-5 rounded-xl border border-cardBorder flex flex-col justify-between">
           <div>
             <h3 class="text-sm font-bold text-white mb-4">Distribución por Continente</h3>
-            <div class="space-y-3 text-xs" id="continentBars">
+            <div class="space-y-3 text-xs">
               <div>
                 <div class="flex justify-between mb-1">
                   <span>América Central</span>
@@ -197,7 +228,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </section>
 
@@ -217,7 +247,7 @@
           <form id="forumForm" onsubmit="handlePostForum(event)" class="space-y-3 mb-6 bg-brandDark/50 p-4 rounded-xl border border-cardBorder">
             <input type="text" id="forumAuthor" required placeholder="Tu nombre" 
                    class="w-full bg-cardDark border border-cardBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-goldAccent">
-            <textarea id="forumMessage" required rows="2" placeholder="Publica un comentario o saludo..." 
+            <textarea id="forumMessage" required rows="2" placeholder="Publica un comentario, memoria o saludo..." 
                       class="w-full bg-cardDark border border-cardBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-goldAccent resize-none"></textarea>
             <button type="submit" class="bg-zinc-800 hover:bg-goldAccent hover:text-black text-white font-semibold px-4 py-1.5 rounded-lg text-xs transition">
               Publicar Mensaje
@@ -226,7 +256,7 @@
 
           <div id="forumPostsList" class="space-y-3 max-h-64 overflow-y-auto">
             <div id="emptyForumNotice" class="text-xs text-gray-500 text-center py-6">
-              No hay publicaciones aún. Sé el primero en escribir.
+              No hay publicaciones aún. Sé el primero en iniciar una conversación.
             </div>
           </div>
         </div>
@@ -280,17 +310,17 @@
         <div class="bg-brandDark/60 p-4 rounded-xl border border-cardBorder">
           <span class="text-goldAccent font-bold block mb-1">Ruta Clásica</span>
           <p class="text-gray-300 font-medium">10:00 AM - 02:00 PM</p>
-          <p class="text-gray-500 mt-1">Rock and Roll, Soul y éxitos inolvidables.</p>
+          <p class="text-gray-500 mt-1">Rock and Roll, Soul y éxitos de colección.</p>
         </div>
         <div class="bg-brandDark/60 p-4 rounded-xl border border-cardBorder">
           <span class="text-goldAccent font-bold block mb-1">Explosión 80s & 90s</span>
           <p class="text-gray-300 font-medium">02:00 PM - 07:00 PM</p>
-          <p class="text-gray-500 mt-1">New wave, disco y clásicos en inglés.</p>
+          <p class="text-gray-500 mt-1">New wave, disco, dance y rock en inglés.</p>
         </div>
         <div class="bg-brandDark/60 p-4 rounded-xl border border-cardBorder">
           <span class="text-goldAccent font-bold block mb-1">Noche Romántica</span>
           <p class="text-gray-300 font-medium">07:00 PM - 12:00 MN</p>
-          <p class="text-gray-500 mt-1">Grandes temas lentos y clásicos de colección.</p>
+          <p class="text-gray-500 mt-1">Grandes temas lentos e inolvidables.</p>
         </div>
       </div>
     </section>
@@ -298,10 +328,32 @@
   </main>
 
   <footer class="bg-cardDark border-t border-cardBorder py-6 mt-12 text-center text-xs text-gray-500">
-    <p>&copy; 2026 Classic Radio CR. Música clásica para verdaderos oyentes.</p>
+    <p>&copy; 2026 Classic Radio CR. Todos los derechos reservados.</p>
   </footer>
 
   <script>
+    // FUNCIÓN DE MINI-CONSOLA FLOTANTE
+    function launchMiniPlayer() {
+      const url = "http://classicradiocr.radio12345.com/";
+      const width = 450;
+      const height = 480;
+      const left = window.screen.width - width - 50;
+      const top = 100;
+
+      // Abre mini-reproductor sin sacar al usuario de la web
+      window.open(
+        url, 
+        'ClassicRadioMiniPlayer', 
+        `width=${width},height=${height},top=${top},left=${left},scrollbars=no,resizable=yes`
+      );
+
+      // Activa animación visual en la página principal
+      document.getElementById('vinylDisc').classList.add('vinyl-spin');
+      document.getElementById('playerStateText').innerText = "Transmisión Activa";
+      document.getElementById('playerStateText').classList.add('text-emerald-400');
+    }
+
+    // GESTIÓN DE MÉTRICAS
     let metrics = JSON.parse(localStorage.getItem('cr_metrics')) || {
       total: 0,
       countries: [],
@@ -372,13 +424,14 @@
       }
     }
 
+    // FORO
     function updateForumUI() {
       const container = document.getElementById('forumPostsList');
       const counter = document.getElementById('forumCount');
       counter.innerText = `${forumPosts.length} temas`;
 
       if (forumPosts.length === 0) {
-        container.innerHTML = '<div class="text-xs text-gray-500 text-center py-6">No hay publicaciones aún. Sé el primero en escribir.</div>';
+        container.innerHTML = '<div class="text-xs text-gray-500 text-center py-6">No hay publicaciones aún. Sé el primero en iniciar una conversación.</div>';
         return;
       }
 
@@ -405,6 +458,7 @@
       updateForumUI();
     }
 
+    // PETICIONES
     function updateRequestsUI() {
       const container = document.getElementById('requestQueueList');
       const counter = document.getElementById('requestCount');
