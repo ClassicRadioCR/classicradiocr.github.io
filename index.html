@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classic Radio CR | Lo Mejor de los 60s, 70s, 80s y 90s</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Syne & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            vintage: {
+              gold: '#e5a93c',
+              lightgold: '#fcd34d',
+              amber: '#f59e0b',
+              glow: '#ffbe3b',
+              dark: '#0f0f14',
+              surface: '#17171f',
+              card: '#1f1f2b',
+              cardborder: '#2e2e42'
+            }
+          },
+          fontFamily: {
+            heading: ['Syne', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          animation: {
+            'spin-slow': 'spin 12s linear infinite',
+            'pulse-fast': 'pulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'beacon': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Efecto de surcos de vinilo */
+    .vinyl-grooves {
+      background: radial-gradient(circle, #1a1a24 20%, #0d0d12 21%, #0d0d12 35%, #181822 36%, #181822 50%, #0e0e13 51%, #0e0e13 65%, #161620 66%, #161620 80%, #0a0a0e 81%);
+      box-shadow: 0 0 35px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(229, 169, 60, 0.2);
+    }
+    
+    /* Brillo de luz sobre vinilo */
+    .vinyl-sheen {
+      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.08) 100%);
+    }
+
+    /* Scrollbar personalizada */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f0f14;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2a2a3c;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #e5a93c;
+    }
+
+    /* Glassmorphism */
+    .glass-panel {
+      background: rgba(23, 23, 31, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(229, 169, 60, 0.14);
+    }
+
+    .glass-card {
+      background: rgba(31, 31, 43, 0.65);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(46, 46, 66, 0.8);
+    }
+
+    /* Animación de la aguja del tocadiscos */
+    .tonearm {
+      transform-origin: 20px 20px;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .tonearm.playing {
+      transform: rotate(26deg);
+    }
+  </style>
+</head>
+<body class="bg-vintage-dark text-slate-100 font-sans min-h-screen flex flex-col selection:bg-vintage-gold selection:text-black">
+
+  <!-- =============================== -->
+  <!-- BARRA SUPERIOR / HEADER GLOBAL -->
+  <!-- =============================== -->
+  <header class="sticky top-0 z-50 glass-panel border-b border-vintage-cardborder">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Marca & Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-vintage-gold to-yellow-600 flex items-center justify-center shadow-lg shadow-vintage-gold/20 group-hover:scale-105 transition-transform">
+          <i class="fa-solid fa-compact-disc text-2xl text-slate-950 animate-spin-slow"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-heading font-extrabold text-xl tracking-wider text-white group-hover:text-vintage-gold transition-colors">CLASSIC RADIO</span>
+            <span class="bg-vintage-gold/20 text-vintage-gold text-xs font-bold px-2 py-0.5 rounded border border-vintage-gold/30">CR 🇨🇷</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-mono tracking-tight">60s · 70s · 80s · 90s VINTAGE AUDIO</p>
+        </div>
+      </a>
+
+      <!-- Navegación Escritorio -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+        <a href="#player-section" class="hover:text-vintage-gold transition-colors flex items-center gap-1.5"><i class="fa-solid fa-circle-play text-vintage-gold"></i> Transmisión</a>
+        <a href="#listeners-section" class="hover:text-vintage-gold transition-colors flex items-center gap-1.5"><i class="fa-solid fa-earth-americas"></i> Oyentes & Mapa</a>
+        <a href="#forum-section" class="hover:text-vintage-gold transition-colors flex items-center gap-1.5"><i class="fa-solid fa-comments"></i> Muro de Cabina</a>
+        <a href="#utilities-section" class="hover:text-vintage-gold transition-colors flex items-center gap-1.5"><i class="fa-solid fa-sliders"></i> Peticiones & Info</a>
+      </nav>
+
+      <!-- Estado En Vivo & Botón Rápido -->
+      <div class="flex items-center gap-3">
+        <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse-fast"></span>
+          <span>ON AIR · EN VIVO</span>
+        </div>
+
+        <a href="http://classicradiocr.radio12345.com/" target="_blank" rel="noopener noreferrer" 
+           class="px-4 py-2 rounded-lg bg-vintage-gold hover:bg-vintage-lightgold text-slate-950 text-xs sm:text-sm font-bold flex items-center gap-2 shadow-lg shadow-vintage-gold/25 transition-all hover:scale-105 active:scale-95"
+           title="Abrir en ventana emergente de Listen2MyRadio">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          <span class="hidden sm:inline">Servidor Directo</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- NOTIFICACIÓN TOAST FLOTANTE -->
+  <!-- ============================================== -->
+  <div id="toastMessage" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 bg-vintage-card border border-vintage-gold/50 text-white px-5 py-3 rounded-xl shadow-2xl">
+    <i id="toastIcon" class="fa-solid fa-circle-check text-vintage-gold text-lg"></i>
+    <span id="toastText" class="text-sm font-medium">Acción completada con éxito</span>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- CONTENEDOR PRINCIPAL -->
+  <!-- ============================================== -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+    <!-- ============================================== -->
+    <!-- 1. SECCIÓN PRINCIPAL: REPRODUCTOR HI-FI VINTAGE -->
+    <!-- ============================================== -->
+    <section id="player-section" class="relative">
+      
+      <!-- Fondo decorativo sutil -->
+      <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-3/4 h-72 bg-vintage-gold/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+      <div class="relative glass-card rounded-3xl p-6 sm:p-8 lg:p-10 border border-vintage-cardborder shadow-2xl overflow-hidden">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <!-- Lado Izquierdo: Tocadiscos Vintage Interactivo -->
+          <div class="lg:col-span-5 flex flex-col items-center justify-center">
+            
+            <div class="relative w-64 h-64 sm:w-72 sm:h-72 bg-[#121217] rounded-3xl p-4 border border-vintage-cardborder/80 shadow-[inset_0_2px_10px_rgba(0,0,0,0.8)] flex items-center justify-center">
+              
+              <!-- Plato de Vinilo Giratorio -->
+              <div id="vinylDisc" class="relative w-56 h-56 sm:w-60 sm:h-60 rounded-full vinyl-grooves flex items-center justify-center transition-all duration-700">
+                
+                <!-- Reflejo de luz brillante -->
+                <div class="absolute inset-0 rounded-full vinyl-sheen pointer-events-none"></div>
+                
+                <!-- Galleta / Etiqueta Central del Vinilo -->
+                <div class="w-24 h-24 rounded-full bg-gradient-to-br from-vintage-amber via-yellow-600 to-amber-900 border-4 border-slate-900 flex flex-col items-center justify-center text-center p-1.5 shadow-md">
+                  <span class="text-[9px] font-mono text-black font-extrabold uppercase tracking-widest">CLASSIC</span>
+                  <span class="text-xs font-heading font-black text-slate-950 leading-tight">CR 60-90</span>
+                  <span class="text-[8px] text-slate-900 font-bold">33 ⅓ RPM</span>
+                  <div class="w-3.5 h-3.5 rounded-full bg-slate-950 border border-vintage-gold/60 mt-1"></div>
+                </div>
+
+              </div>
+
+              <!-- Brazo de lectura analógico (Tonearm) -->
+              <div class="absolute top-4 right-4 w-16 h-36 pointer-events-none">
+                <svg viewBox="0 0 60 140" class="w-full h-full">
+                  <!-- Base del eje -->
+                  <circle cx="20" cy="20" r="14" fill="#2d2d3d" stroke="#e5a93c" stroke-width="2"/>
+                  <circle cx="20" cy="20" r="6" fill="#121217"/>
+                  <!-- Brazo articulado -->
+                  <g id="tonearmElement" class="tonearm">
+                    <path d="M 20 20 L 22 80 L 16 115" stroke="#9ca3af" stroke-width="4" stroke-linecap="round" fill="none"/>
+                    <!-- Contrapeso -->
+                    <rect x="14" y="2" width="12" height="14" rx="2" fill="#4b5563"/>
+                    <!-- Cápsula y aguja -->
+                    <polygon points="12,115 20,115 18,132 14,132" fill="#e5a93c"/>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Indicador de RPM / Audio -->
+              <div class="absolute bottom-3 left-4 flex items-center gap-1.5 text-[10px] font-mono text-slate-400 bg-slate-900/80 px-2 py-0.5 rounded border border-white/5">
+                <span id="rpmStatus">STATUS: STANDBY</span>
+              </div>
+            </div>
+
+            <!-- Botones de Control Hi-Fi -->
+            <div class="flex items-center gap-4 mt-6">
+              <button id="togglePlayBtn" onclick="togglePlayback()" 
+                class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-vintage-gold to-yellow-500 hover:from-yellow-400 hover:to-vintage-gold text-slate-950 font-bold text-base flex items-center gap-3 shadow-xl shadow-vintage-gold/20 transition-all hover:scale-105 active:scale-95">
+                <i id="playBtnIcon" class="fa-solid fa-play text-lg"></i>
+                <span id="playBtnText">Sintonizar Emisión</span>
+              </button>
+
+              <button onclick="toggleIframeModal()" 
+                class="p-3.5 rounded-2xl bg-vintage-surface hover:bg-vintage-card border border-vintage-cardborder text-slate-300 hover:text-vintage-gold transition-all"
+                title="Ver reproductor embebido completo">
+                <i class="fa-solid fa-tv text-lg"></i>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Lado Derecho: Cabina de Radio, Metadatos y Vúmetro -->
+          <div class="lg:col-span-7 flex flex-col justify-between space-y-6">
+            
+            <!-- Encabezado de la emisión -->
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-1 rounded bg-vintage-gold/15 text-vintage-gold border border-vintage-gold/30 text-xs font-mono font-bold tracking-wide">
+                    SHOUTCAST V1 · 128 KBPS
+                  </span>
+                  <span class="text-xs text-slate-400 font-mono">PUERTO: 15404</span>
+                </div>
+                
+                <span class="text-xs font-mono text-emerald-400 flex items-center gap-1.5">
+                  <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span> Servidor: uk17freenew
+                </span>
+              </div>
+
+              <h1 class="text-3xl sm:text-4xl font-heading font-black text-white tracking-tight">
+                Classic Radio <span class="text-vintage-gold">Costa Rica</span>
+              </h1>
+              <p class="text-slate-400 text-sm mt-1">
+                Reviviendo la época dorada: Rock Clásico, Baladas inolvidables, Disco 70s y New Wave 80s sin interrupciones.
+              </p>
+            </div>
+
+            <!-- Display Digital de la Estación -->
+            <div class="p-4 sm:p-5 rounded-2xl bg-black/60 border border-vintage-cardborder relative overflow-hidden">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <span class="text-[10px] font-mono text-vintage-gold tracking-widest uppercase block mb-1">PROGRAMA AL AIRE</span>
+                  <h3 id="currentShowTitle" class="text-lg sm:text-xl font-bold text-white">Maratón de Éxitos Inolvidables</h3>
+                  <p id="currentTrackArtist" class="text-slate-400 text-xs sm:text-sm mt-0.5">The Beatles · Queen · ABBA · Michael Jackson · Soda Stereo</p>
+                </div>
+                <div class="text-right font-mono">
+                  <span class="text-[10px] text-slate-400 block">HORA CABINA</span>
+                  <span id="liveClock" class="text-lg font-bold text-vintage-gold">--:--:--</span>
+                </div>
+              </div>
+
+              <!-- Ecualizador Analógico Dinámico (Canvas) -->
+              <div class="mt-4 pt-3 border-t border-slate-800/80">
+                <div class="flex justify-between items-center mb-1 text-[10px] font-mono text-slate-500">
+                  <span>SPECTRUM ANALYZER (VU METER)</span>
+                  <span id="eqHzLabel">60Hz - 16kHz</span>
+                </div>
+                <canvas id="visualizerCanvas" class="w-full h-12 rounded bg-slate-950/70 border border-slate-900"></canvas>
+              </div>
+            </div>
+
+            <!-- Avisos y Controles de Audio -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              
+              <!-- Control de Volumen -->
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-vintage-surface border border-vintage-cardborder">
+                <i class="fa-solid fa-volume-high text-vintage-gold text-sm pl-1"></i>
+                <div class="flex-1">
+                  <div class="flex justify-between text-[11px] font-mono text-slate-400 mb-1">
+                    <span>NIVEL MASTER</span>
+                    <span id="volPercentage">85%</span>
+                  </div>
+                  <input type="range" id="volumeSlider" min="0" max="100" value="85" 
+                         class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-vintage-gold"
+                         oninput="handleVolumeChange(this.value)">
+                </div>
+              </div>
+
+              <!-- Tarjeta de Sintonía Externa Rápida -->
+              <div class="flex items-center justify-between p-3 rounded-xl bg-vintage-surface border border-vintage-cardborder">
+                <div class="text-xs">
+                  <span class="font-bold text-slate-200 block">¿No escuchas el audio?</span>
+                  <span class="text-[11px] text-slate-400">Escucha directa en Listen2MyRadio</span>
+                </div>
+                <button onclick="toggleIframeModal()" class="px-3 py-1.5 rounded-lg bg-vintage-card hover:bg-vintage-cardborder border border-vintage-gold/30 text-vintage-gold text-xs font-semibold">
+                  Abrir Marco
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- MODAL / CONTENEDOR EMBEBIDO DEL REPRODUCTOR LISTEN2MYRADIO -->
+    <!-- ============================================================== -->
+    <div id="iframeModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md transition-opacity">
+      <div class="relative w-full max-w-4xl bg-vintage-surface rounded-2xl border border-vintage-gold/40 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+        
+        <!-- Header del Modal -->
+        <div class="p-4 sm:px-6 bg-vintage-card border-b border-vintage-cardborder flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></div>
+            <div>
+              <h4 class="font-heading font-bold text-white text-base">Reproductor Oficial en Vivo</h4>
+              <p class="text-xs text-slate-400 font-mono">http://classicradiocr.radio12345.com/</p>
+            </div>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <a href="http://classicradiocr.radio12345.com/" target="_blank" rel="noopener noreferrer" 
+               class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-vintage-gold font-mono flex items-center gap-1.5">
+              <span>Nueva Pestaña</span>
+              <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
+            </a>
+            <button onclick="toggleIframeModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-red-500/20 hover:text-red-400 text-slate-400 flex items-center justify-center transition-colors">
+              <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Alerta Informativa Legal y de Navegación -->
+        <div class="bg-amber-500/10 border-b border-amber-500/20 px-6 py-2.5 text-xs text-amber-200 flex items-center justify-between">
+          <span><i class="fa-solid fa-circle-info mr-1.5 text-vintage-gold"></i> Dale clic al botón <strong>Play</strong> dentro del recuadro para iniciar la transmisión directa.</span>
+          <span class="font-mono text-[10px] text-amber-300 hidden sm:inline">Servidor: 95.154.197.82:15404</span>
+        </div>
+
+        <!-- Contenedor del IFRAME -->
+        <div class="relative w-full h-[460px] bg-black">
+          <iframe 
+            id="radioIframe"
+            src="about:blank"
+            data-src="http://classicradiocr.radio12345.com/"
+            title="Listen2MyRadio Player"
+            class="w-full h-full border-0"
+            allow="autoplay; encrypted-media">
+          </iframe>
+        </div>
+
+        <!-- Footer del Modal -->
+        <div class="p-3 bg-vintage-card/60 text-center text-xs text-slate-400 border-t border-vintage-cardborder">
+          Transmisión impulsada por el servidor Shoutcast v1 de Listen2MyRadio para Classic Radio CR.
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- 2. SECCIÓN: OYENTES EN VIVO, GEOLOCALIZACIÓN & MAPA INTERACTIVO -->
+    <!-- ============================================================== -->
+    <section id="listeners-section" class="space-y-6">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-vintage-cardborder pb-4">
+        <div>
+          <span class="text-xs font-mono text-vintage-gold uppercase tracking-wider font-semibold">MÉTRICAS & AUDIENCIA GLOBAL</span>
+          <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-white">¿De dónde nos escuchan?</h2>
+          <p class="text-slate-400 text-sm mt-1">Monitoreo en tiempo real de oyentes conectados y reporte interactivo de sintonía.</p>
+        </div>
+        
+        <div class="flex items-center gap-3">
+          <button onclick="autoReportUserLocation()" class="px-4 py-2 rounded-xl bg-vintage-card hover:bg-vintage-cardborder border border-vintage-gold/30 text-xs sm:text-sm font-semibold text-vintage-gold flex items-center gap-2 transition-all">
+            <i class="fa-solid fa-location-crosshairs text-emerald-400"></i>
+            <span>Reportar Mi Ubicación Actual</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tarjetas de Concurrencia y Estadísticas -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <div class="glass-card p-5 rounded-2xl border border-vintage-cardborder relative overflow-hidden">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono text-slate-400 uppercase">OYENTES EN VIVO</span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+          </div>
+          <div class="mt-2 flex items-baseline gap-2">
+            <span id="totalListenersCounter" class="text-4xl font-heading font-black text-white">28</span>
+            <span class="text-xs text-emerald-400 font-mono font-semibold">+3 últimos 10m</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-2">Sintonizando al mismo tiempo</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-vintage-cardborder">
+          <span class="text-xs font-mono text-slate-400 uppercase">PAÍS LÍDER EN SINTONÍA</span>
+          <div class="mt-2 flex items-center gap-2">
+            <span class="text-3xl">🇨🇷</span>
+            <div>
+              <h4 id="topCountryName" class="text-lg font-bold text-white">Costa Rica</h4>
+              <span id="topCountryCount" class="text-xs text-vintage-gold font-mono">14 oyentes activos</span>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-2">San José, Heredia, Cartago y Alajuela</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-vintage-cardborder">
+          <span class="text-xs font-mono text-slate-400 uppercase">PAÍSES CONECTADOS HOY</span>
+          <div class="mt-2 flex items-baseline gap-2">
+            <span id="totalCountriesCounter" class="text-4xl font-heading font-black text-vintage-gold">8</span>
+            <span class="text-xs text-slate-400 font-mono">América & Europa</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-2">Reportes verificados por oyentes</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-vintage-cardborder">
+          <span class="text-xs font-mono text-slate-400 uppercase">ESTADO DE CABINA CR</span>
+          <div class="mt-2 flex items-center gap-2">
+            <i class="fa-solid fa-tower-broadcast text-2xl text-emerald-400"></i>
+            <div>
+              <span class="text-sm font-bold text-white block">Estabilidad 100%</span>
+              <span class="text-xs text-emerald-400 font-mono">Ping: 34ms</span>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-2">Sin caídas ni pérdida de paquetes</p>
+        </div>
+
+      </div>
+
+      <!-- Mapa Mundial y Gráfico de Países -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Mapa de Nodos en Vivo (SVG Estilizado Dark Hi-Fi) -->
+        <div class="lg:col-span-7 glass-card p-6 rounded-3xl border border-vintage-cardborder flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="font-heading font-bold text-lg text-white">Mapa Mundial de Sintonía</h3>
+              <p class="text-xs text-slate-400">Balizas luminosas indican oyentes conectados en este instante.</p>
+            </div>
+            <span class="text-xs font-mono bg-vintage-gold/10 text-vintage-gold px-2.5 py-1 rounded border border-vintage-gold/20">LIVE RADAR</span>
+          </div>
+
+          <!-- Contenedor Visual del Mapa -->
+          <div class="relative w-full aspect-[2/1] bg-slate-950/90 rounded-2xl border border-vintage-cardborder/60 overflow-hidden flex items-center justify-center p-2">
+            
+            <!-- Cuadrícula Radar de Fondo -->
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,#1f293d10_1px,transparent_1px),linear-gradient(to_bottom,#1f293d10_1px,transparent_1px)] bg-[size:2rem_2rem]"></div>
+            
+            <!-- SVG Mapa Simplificado del Mundo con Siluetas Geográficas -->
+            <svg viewBox="0 0 1000 500" class="w-full h-full opacity-60">
+              <!-- Norteamérica -->
+              <path d="M150,80 Q220,70 290,110 T320,180 T260,230 T180,240 T120,160 Z" fill="#2d3748" />
+              <!-- Centroamérica y Caribe -->
+              <path d="M220,240 Q240,265 260,290 T280,305 T255,310 T230,270 Z" fill="#4a5568" />
+              <!-- Sudamérica -->
+              <path d="M280,310 Q340,320 380,380 T350,470 T280,450 T260,360 Z" fill="#2d3748" />
+              <!-- Europa -->
+              <path d="M480,100 Q540,80 580,120 T560,180 T490,170 T470,130 Z" fill="#2d3748" />
+              <!-- África -->
+              <path d="M470,190 Q550,200 580,270 T550,380 T480,360 T450,240 Z" fill="#1f2937" />
+              <!-- Asia -->
+              <path d="M600,90 Q750,70 850,150 T880,260 T760,280 T630,210 Z" fill="#1f2937" />
+              <!-- Oceanía -->
+              <path d="M780,340 Q850,330 890,380 T840,430 T770,390 Z" fill="#1f2937" />
+            </svg>
+
+            <!-- NODOS / BALIZAS EN VIVO DE OYENTES -->
+            <!-- Costa Rica (Punto Principal) -->
+            <div class="absolute left-[24.5%] top-[56%] group cursor-pointer" title="Costa Rica: 14 oyentes">
+              <span class="absolute -inset-2 rounded-full bg-vintage-gold opacity-75 animate-beacon"></span>
+              <span class="relative block w-3.5 h-3.5 rounded-full bg-vintage-gold border-2 border-white shadow-lg"></span>
+              <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-mono bg-black/90 text-vintage-gold px-1.5 py-0.5 rounded border border-vintage-gold/40 pointer-events-none whitespace-nowrap">CR: 14</span>
+            </div>
+
+            <!-- México -->
+            <div class="absolute left-[20%] top-[40%] group cursor-pointer" title="México: 5 oyentes">
+              <span class="absolute -inset-1.5 rounded-full bg-emerald-400 opacity-60 animate-ping"></span>
+              <span class="relative block w-2.5 h-2.5 rounded-full bg-emerald-400 border border-white"></span>
+              <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] font-mono bg-black/80 text-white px-1 rounded pointer-events-none">MX: 5</span>
+            </div>
+
+            <!-- Estados Unidos (Florida / Costa Este) -->
+            <div class="absolute left-[26%] top-[30%] group cursor-pointer" title="EE. UU.: 4 oyentes">
+              <span class="absolute -inset-1.5 rounded-full bg-blue-400 opacity-60 animate-ping"></span>
+              <span class="relative block w-2.5 h-2.5 rounded-full bg-blue-400 border border-white"></span>
+              <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] font-mono bg-black/80 text-white px-1 rounded pointer-events-none">USA: 4</span>
+            </div>
+
+            <!-- Colombia -->
+            <div class="absolute left-[29%] top-[62%] group cursor-pointer" title="Colombia: 2 oyentes">
+              <span class="relative block w-2 h-2 rounded-full bg-amber-400 border border-white"></span>
+            </div>
+
+            <!-- España (Madrid / Barcelona) -->
+            <div class="absolute left-[49%] top-[27%] group cursor-pointer" title="España: 2 oyentes">
+              <span class="absolute -inset-1.5 rounded-full bg-red-400 opacity-60 animate-ping"></span>
+              <span class="relative block w-2.5 h-2.5 rounded-full bg-red-400 border border-white"></span>
+              <span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] font-mono bg-black/80 text-white px-1 rounded pointer-events-none">ES: 2</span>
+            </div>
+
+            <!-- Argentina -->
+            <div class="absolute left-[32%] top-[82%] group cursor-pointer" title="Argentina: 1 oyente">
+              <span class="relative block w-2 h-2 rounded-full bg-sky-300 border border-white"></span>
+            </div>
+
+          </div>
+
+          <!-- Leyenda del Mapa -->
+          <div class="flex flex-wrap items-center justify-between gap-2 mt-4 pt-3 border-t border-vintage-cardborder text-xs text-slate-400">
+            <div class="flex items-center gap-4">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-vintage-gold"></span> Costa Rica (Cabina)</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span> Internacional Activo</span>
+            </div>
+            <span class="font-mono text-[11px] text-slate-500">Actualización automática cada 15s</span>
+          </div>
+        </div>
+
+        <!-- Desglose de Países & Formulario de Check-in -->
+        <div class="lg:col-span-5 space-y-4">
+          
+          <!-- Lista de Países con Barras de Progreso -->
+          <div class="glass-card p-5 rounded-3xl border border-vintage-cardborder">
+            <h3 class="font-heading font-bold text-base text-white mb-3 flex items-center justify-between">
+              <span>Distribución por Países</span>
+              <span class="text-xs font-mono text-slate-400">Oyentes</span>
+            </h3>
+
+            <div id="countriesBreakdownContainer" class="space-y-2.5 text-xs">
+              <!-- Renderizado dinámico vía JavaScript -->
+            </div>
+          </div>
+
+          <!-- Tarjeta: Envía tu Reporte de Sintonía -->
+          <div class="glass-card p-5 rounded-3xl border border-vintage-gold/30 bg-gradient-to-br from-vintage-card to-vintage-surface">
+            <h4 class="font-heading font-bold text-white text-sm flex items-center gap-2">
+              <i class="fa-solid fa-bullhorn text-vintage-gold"></i>
+              <span>Reportar Sintonía a Cabina</span>
+            </h4>
+            <p class="text-xs text-slate-400 mt-1 mb-3">Marca tu presencia en el mapa y envía un saludo al aire.</p>
+
+            <form id="checkinForm" onsubmit="handleCheckin(event)" class="space-y-2.5">
+              <div class="grid grid-cols-2 gap-2">
+                <input type="text" id="checkinName" placeholder="Tu nombre / apodo" required
+                  class="w-full bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 outline-none">
+                
+                <input type="text" id="checkinCity" placeholder="Tu ciudad (ej. Heredia)" required
+                  class="w-full bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 outline-none">
+              </div>
+
+              <div class="grid grid-cols-3 gap-2">
+                <select id="checkinCountry" required
+                  class="col-span-2 bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl px-3 py-2 text-xs text-white outline-none">
+                  <option value="CR" selected>🇨🇷 Costa Rica</option>
+                  <option value="MX">🇲🇽 México</option>
+                  <option value="US">🇺🇸 Estados Unidos</option>
+                  <option value="ES">🇪🇸 España</option>
+                  <option value="CO">🇨🇴 Colombia</option>
+                  <option value="AR">🇦🇷 Argentina</option>
+                  <option value="CL">🇨🇱 Chile</option>
+                  <option value="PE">🇵🇪 Perú</option>
+                  <option value="OT">🌎 Otro País</option>
+                </select>
+
+                <button type="submit" 
+                  class="col-span-1 bg-vintage-gold hover:bg-vintage-lightgold text-slate-950 font-bold text-xs rounded-xl transition-all shadow-md active:scale-95 flex items-center justify-center gap-1">
+                  <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                  <span>Reportar</span>
+                </button>
+              </div>
+            </form>
+
+            <!-- Último oyente reportado -->
+            <div id="latestCheckinAlert" class="mt-3 pt-2.5 border-t border-vintage-cardborder/60 text-[11px] text-slate-400 flex items-center gap-2">
+              <span class="text-xs">👋</span>
+              <span>Último reporte: <strong class="text-white">Esteban G.</strong> desde <span class="text-vintage-gold">Cartago, CR</span></span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- 3. SECCIÓN: MURO DE CABINA / FORO DE LA COMUNIDAD -->
+    <!-- ============================================================== -->
+    <section id="forum-section" class="space-y-6">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-vintage-cardborder pb-4">
+        <div>
+          <span class="text-xs font-mono text-vintage-gold uppercase tracking-wider font-semibold">COMUNIDAD & AMIGOS DE LA MÚSICA</span>
+          <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-white">Muro de Cabina & Foro</h2>
+          <p class="text-slate-400 text-sm mt-1">Comparte anécdotas, recuerdos de conciertos y opina sobre las joyas clásicas.</p>
+        </div>
+
+        <!-- Filtros de Categorías -->
+        <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
+          <button onclick="filterForum('todos')" id="filter-todos" class="px-3 py-1.5 rounded-lg bg-vintage-gold text-slate-950 font-bold transition-all">Todos</button>
+          <button onclick="filterForum('70s80s')" id="filter-70s80s" class="px-3 py-1.5 rounded-lg bg-vintage-card text-slate-300 hover:text-white border border-vintage-cardborder transition-all">70s & 80s</button>
+          <button onclick="filterForum('rock')" id="filter-rock" class="px-3 py-1.5 rounded-lg bg-vintage-card text-slate-300 hover:text-white border border-vintage-cardborder transition-all">Rock Clásico</button>
+          <button onclick="filterForum('baladas')" id="filter-baladas" class="px-3 py-1.5 rounded-lg bg-vintage-card text-slate-300 hover:text-white border border-vintage-cardborder transition-all">Baladas del Recuerdo</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Formulario para publicar en el foro -->
+        <div class="lg:col-span-4 glass-card p-6 rounded-3xl border border-vintage-cardborder space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-vintage-gold/20 text-vintage-gold flex items-center justify-center font-bold">
+              <i class="fa-solid fa-pen-nib text-sm"></i>
+            </div>
+            <div>
+              <h3 class="font-heading font-bold text-white text-base">Dejar un Mensaje al Aire</h3>
+              <p class="text-[11px] text-slate-400">Se publicará instantáneamente en el muro.</p>
+            </div>
+          </div>
+
+          <form id="forumForm" onsubmit="handlePostForum(event)" class="space-y-3">
+            <div>
+              <label class="block text-[11px] font-mono text-slate-400 mb-1">TU NOMBRE O ALIAS</label>
+              <input type="text" id="forumAuthor" placeholder="Ej. Roberto 'El Beatle'" required
+                class="w-full bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 outline-none">
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] font-mono text-slate-400 mb-1">CATEGORÍA</label>
+                <select id="forumCategory" class="w-full bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl px-3 py-2 text-xs text-white outline-none">
+                  <option value="70s80s">70s & 80s</option>
+                  <option value="rock">Rock Clásico</option>
+                  <option value="baladas">Baladas</option>
+                  <option value="general">General</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-mono text-slate-400 mb-1">UBICACIÓN</label>
+                <input type="text" id="forumLocation" placeholder="Ej. San José, CR" required
+                  class="w-full bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl px-3 py-2 text-xs text-white placeholder-slate-600 outline-none">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-mono text-slate-400 mb-1">MENSAJE O COMENTARIO</label>
+              <textarea id="forumMessage" rows="3" placeholder="¿Qué recuerdos te trae esta canción? ¿Qué banda marcó tu juventud?" required
+                class="w-full bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl p-3 text-xs text-white placeholder-slate-600 outline-none resize-none"></textarea>
+            </div>
+
+            <button type="submit" 
+              class="w-full py-3 rounded-xl bg-vintage-gold hover:bg-vintage-lightgold text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95">
+              <i class="fa-solid fa-comment-dots"></i>
+              <span>Publicar en la Comunidad</span>
+            </button>
+          </form>
+
+          <!-- Reglas de la comunidad -->
+          <div class="text-[11px] text-slate-500 border-t border-vintage-cardborder pt-3 space-y-1">
+            <p><i class="fa-solid fa-shield-halved text-vintage-gold mr-1"></i> Respeto mutuo y pasión por los clásicos.</p>
+            <p><i class="fa-solid fa-heart text-red-400 mr-1"></i> Los locutores leen mensajes seleccionados al aire.</p>
+          </div>
+        </div>
+
+        <!-- Muro de Hilos y Mensajes -->
+        <div class="lg:col-span-8 space-y-4">
+          <div id="forumPostsContainer" class="space-y-3.5">
+            <!-- Hilos renderizados por JS -->
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- 4. SECCIÓN: UTILIDADES DE RADIO & PARRILLA SEMANAL -->
+    <!-- ============================================================== -->
+    <section id="utilities-section" class="space-y-6">
+      
+      <div class="border-b border-vintage-cardborder pb-4">
+        <span class="text-xs font-mono text-vintage-gold uppercase tracking-wider font-semibold">SERVICIOS & PROGRAMACIÓN</span>
+        <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-white">Cosas de Radio & Peticiones</h2>
+        <p class="text-slate-400 text-sm mt-1">Pide tu tema favorito a la cabina y consulta los horarios especiales de la semana.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Pestañas de Programación Semanal -->
+        <div class="lg:col-span-7 glass-card p-6 rounded-3xl border border-vintage-cardborder">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-heading font-bold text-lg text-white flex items-center gap-2">
+              <i class="fa-solid fa-calendar-days text-vintage-gold"></i>
+              <span>Parrilla Semanal de Especiales</span>
+            </h3>
+            <span class="text-xs font-mono text-slate-400">HORA COSTA RICA (GMT-6)</span>
+          </div>
+
+          <!-- Selector de Días -->
+          <div class="flex items-center gap-1.5 overflow-x-auto pb-2 border-b border-vintage-cardborder mb-4">
+            <button onclick="showSchedule('lun')" id="tab-lun" class="schedule-tab px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-vintage-gold text-slate-950">Lunes</button>
+            <button onclick="showSchedule('mar')" id="tab-mar" class="schedule-tab px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-900 text-slate-400 hover:text-white">Martes</button>
+            <button onclick="showSchedule('mie')" id="tab-mie" class="schedule-tab px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-900 text-slate-400 hover:text-white">Miércoles</button>
+            <button onclick="showSchedule('jue')" id="tab-jue" class="schedule-tab px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-900 text-slate-400 hover:text-white">Jueves</button>
+            <button onclick="showSchedule('vie')" id="tab-vie" class="schedule-tab px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-900 text-slate-400 hover:text-white">Viernes</button>
+            <button onclick="showSchedule('fin')" id="tab-fin" class="schedule-tab px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-900 text-slate-400 hover:text-white">Sáb / Dom</button>
+          </div>
+
+          <!-- Contenido de los Horarios -->
+          <div id="scheduleContent" class="space-y-3">
+            <!-- Cargado dinámicamente -->
+          </div>
+        </div>
+
+        <!-- Petición de Canción a Cabina -->
+        <div class="lg:col-span-5 glass-card p-6 rounded-3xl border border-vintage-cardborder space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-heading font-bold text-lg text-white flex items-center gap-2">
+              <i class="fa-solid fa-music text-vintage-gold"></i>
+              <span>Pide Tu Canción</span>
+            </h3>
+            <span class="text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded">BUZÓN ACTIVO</span>
+          </div>
+          <p class="text-xs text-slate-400">Ingresa tu tema clásico y la dedicatoria. Nuestro operador la agregará a la lista de reproducción.</p>
+
+          <form id="songRequestForm" onsubmit="handleSongRequest(event)" class="space-y-3">
+            <div>
+              <label class="block text-[11px] font-mono text-slate-400 mb-1">CANCIÓN & ARTISTA</label>
+              <input type="text" id="reqSong" placeholder="Ej. Hotel California - Eagles" required
+                class="w-full bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 outline-none">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-mono text-slate-400 mb-1">TU NOMBRE / DEDICATORIA</label>
+              <input type="text" id="reqDedication" placeholder="Para mis amigos de la UCR o para mi familia" required
+                class="w-full bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 outline-none">
+            </div>
+
+            <button type="submit" 
+              class="w-full py-3 rounded-xl bg-gradient-to-r from-vintage-amber to-vintage-gold hover:from-yellow-500 hover:to-vintage-amber text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>Enviar Pedido a Cabina</span>
+            </button>
+          </form>
+
+          <!-- Historial de Últimas Canciones Pedidas -->
+          <div class="pt-3 border-t border-vintage-cardborder">
+            <span class="text-[11px] font-mono text-slate-400 block mb-2">ÚLTIMAS PETICIONES EN COLA:</span>
+            <div id="recentRequestsList" class="space-y-1.5 text-xs">
+              <!-- Renderizado por JS -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Ficha Técnica de la Emisora -->
+      <div class="glass-card p-5 rounded-2xl border border-vintage-cardborder flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-slate-400">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-server text-vintage-gold text-base"></i>
+          <span>Servidor: <strong class="text-white">uk17freenew.listen2myradio.com</strong></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-network-wired text-vintage-gold text-base"></i>
+          <span>Puerto: <strong class="text-white">15404</strong></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-radio text-vintage-gold text-base"></i>
+          <span>Protocolo: <strong class="text-white">Shoutcast 1 (MP3 / 44.1kHz)</strong></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-location-dot text-vintage-gold text-base"></i>
+          <span>Cabina: <strong class="text-white">San José, Costa Rica</strong></span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ============================================== -->
+  <!-- PIE DE PÁGINA (FOOTER) -->
+  <!-- ============================================== -->
+  <footer class="mt-16 bg-[#0c0c10] border-t border-vintage-cardborder text-slate-400 text-xs py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-vintage-gold/20 text-vintage-gold flex items-center justify-center font-bold text-lg">
+          <i class="fa-solid fa-radio"></i>
+        </div>
+        <div>
+          <h4 class="font-heading font-extrabold text-white text-sm">Classic Radio CR</h4>
+          <p class="text-[11px] text-slate-500">Transmisión independiente sin fines de lucro · 60s, 70s, 80s y 90s</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400">
+        <a href="#player-section" class="hover:text-vintage-gold transition-colors">Reproductor</a>
+        <a href="#listeners-section" class="hover:text-vintage-gold transition-colors">Mapa de Oyentes</a>
+        <a href="#forum-section" class="hover:text-vintage-gold transition-colors">Foro de Oyentes</a>
+        <a href="http://classicradiocr.radio12345.com/" target="_blank" rel="noopener noreferrer" class="hover:text-vintage-gold transition-colors">Página Listen2MyRadio</a>
+      </div>
+
+      <div class="text-center md:text-right font-mono text-[11px] text-slate-600">
+        <p>&copy; 2026 Classic Radio CR. Todos los derechos reservados.</p>
+        <p class="text-slate-500 mt-0.5">San José, Costa Rica · Señal en Directo</p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ============================================== -->
+  <!-- SCRIPT INTEGRAL DE LA APLICACIÓN -->
+  <!-- ============================================== -->
+  <script>
+    // ==========================================
+    // ESTADO GLOBAL Y PERSISTENCIA (LOCALSTORAGE)
+    // ==========================================
+    let isPlaying = false;
+    let audioVolume = 0.85;
+    let visualizerAnimationId = null;
+
+    // Conteo de países inicial / reactivo
+    const defaultCountries = [
+      { code: 'CR', name: 'Costa Rica', flag: '🇨🇷', count: 14, percent: 50 },
+      { code: 'MX', name: 'México', flag: '🇲🇽', count: 5, percent: 18 },
+      { code: 'US', name: 'Estados Unidos', flag: '🇺🇸', count: 4, percent: 14 },
+      { code: 'ES', name: 'España', flag: '🇪🇸', count: 2, percent: 7 },
+      { code: 'CO', name: 'Colombia', flag: '🇨🇴', count: 2, percent: 7 },
+      { code: 'AR', name: 'Argentina', flag: '🇦🇷', count: 1, percent: 4 }
+    ];
+
+    // Datos del Foro
+    const initialForumPosts = [
+      {
+        id: 'post-1',
+        author: 'Carlos Alvarado',
+        location: 'San José, CR',
+        category: 'rock',
+        categoryLabel: 'Rock Clásico',
+        date: 'Hace 25 min',
+        content: '¡Qué buen repertorio están poniendo hoy! El solo de guitarra de Comfortably Numb de Pink Floyd siempre pone la piel de gallina. Saludos a toda la gente en Chepe.',
+        likes: 12,
+        liked: false
+      },
+      {
+        id: 'post-2',
+        author: 'Marcela Vega',
+        location: 'Cartago, CR',
+        category: '70s80s',
+        categoryLabel: '70s & 80s',
+        date: 'Hace 1 hora',
+        content: 'Escuchando desde la oficina. Los clásicos de Phil Collins y Toto alegran cualquier tarde de trabajo. ¡100% recomendada la radio!',
+        likes: 8,
+        liked: false
+      },
+      {
+        id: 'post-3',
+        author: 'Rodrigo M.',
+        location: 'Guadalajara, MX',
+        category: 'baladas',
+        categoryLabel: 'Baladas',
+        date: 'Hace 2 horas',
+        content: 'Un saludo fraternal desde México a los hermanos ticos. Sintonizando la estación a través de la web, excelente fidelidad de audio.',
+        likes: 6,
+        liked: false
+      }
+    ];
+
+    // Peticiones iniciales
+    const initialRequests = [
+      { song: 'Africa - Toto', dedication: 'Para la familia en Tibás', time: 'Hace 12m' },
+      { song: 'Bohemian Rhapsody - Queen', dedication: 'Dedicado a todos los nostálgicos del rock', time: 'Hace 35m' },
+      { song: 'Take On Me - A-ha', dedication: 'Para recordar los 80s en el cole', time: 'Hace 50m' }
+    ];
+
+    // Programación Semanal
+    const scheduleData = {
+      lun: [
+        { time: '08:00 - 12:00', title: 'Despertar con los 60s', desc: 'The Beatles, The Doors, The Beach Boys y el nacimiento del pop rock.' },
+        { time: '14:00 - 18:00', title: 'Tarde de Rock Clásico', desc: 'Led Zeppelin, Deep Purple, Creedence y Rolling Stones sin pausas.' },
+        { time: '20:00 - 23:00', title: 'Baladas en la Noche', desc: 'Las baladas acústicas e íntimas que marcaron generaciones.' }
+      ],
+      mar: [
+        { time: '09:00 - 13:00', title: 'Mañanas de Éxitos 70s', desc: 'El auge del sonido estéreo, funk elegante y soft rock.' },
+        { time: '15:00 - 19:00', title: 'Maratón Pop & Wave 80s', desc: 'Michael Jackson, Madonna, Duran Duran y Tears for Fears.' },
+        { time: '21:00 - 00:00', title: 'Sesión Nocturna Progresiva', desc: 'Pink Floyd, Genesis y King Crimson.' }
+      ],
+      mie: [
+        { time: '10:00 - 14:00', title: 'Fiebre de Disco & Funk', desc: 'Studio 54 al aire: Bee Gees, Donna Summer, Earth Wind & Fire.' },
+        { time: '16:00 - 20:00', title: 'Rock en Español 80s & 90s', desc: 'Soda Stereo, Enanitos Verdes, Héroes del Silencio y Cafe Tacvba.' }
+      ],
+      jue: [
+        { time: '08:00 - 12:00', title: 'El Sonido Motown & Soul', desc: 'Stevie Wonder, Marvin Gaye, Aretha Franklin.' },
+        { time: '15:00 - 19:00', title: 'One Hit Wonders de los 80s', desc: 'Aquellas canciones eternas de una sola banda inolvidable.' }
+      ],
+      vie: [
+        { time: '14:00 - 18:00', title: 'Viernes Clásico de Karaoke', desc: 'Grandes himnos para cantar a todo pulmón en el carro o en casa.' },
+        { time: '19:00 - 01:00', title: 'Fiesta Retro Fin de Semana', desc: 'Mezcla continua de baile de los 70s, 80s y 90s.' }
+      ],
+      fin: [
+        { time: '09:00 - 14:00', title: 'Domingo Familiar de Oro', desc: 'Las baladas en inglés y español más recordadas.' },
+        { time: '16:00 - 22:00', title: 'Colección de Conciertos en Vivo', desc: 'Grabaciones legendarias en Wembley, Tokio y Woodstock.' }
+      ]
+    };
+
+    // ==========================================
+    // INICIALIZACIÓN AL CARGAR LA PÁGINA
+    // ==========================================
+    window.addEventListener('DOMContentLoaded', () => {
+      initClock();
+      initCountries();
+      initVisualizer();
+      renderForum();
+      showSchedule('lun');
+      renderRequests();
+    });
+
+    // Reloj digital en vivo (Hora Costa Rica GMT-6 simulada con local)
+    function initClock() {
+      const clockEl = document.getElementById('liveClock');
+      function update() {
+        const now = new Date();
+        clockEl.textContent = now.toLocaleTimeString('es-CR', { hour12: false });
+      }
+      update();
+      setInterval(update, 1000);
+    }
+
+    // ==========================================
+    // REPRODUCTOR & CONTROLES VINTAGE
+    // ==========================================
+    function togglePlayback() {
+      const vinyl = document.getElementById('vinylDisc');
+      const tonearm = document.getElementById('tonearmElement');
+      const playIcon = document.getElementById('playBtnIcon');
+      const playText = document.getElementById('playBtnText');
+      const rpmStatus = document.getElementById('rpmStatus');
+
+      isPlaying = !isPlaying;
+
+      if (isPlaying) {
+        // Iniciar animación del tocadiscos
+        vinyl.classList.add('animate-spin-slow');
+        tonearm.classList.add('playing');
+        playIcon.className = 'fa-solid fa-stop text-lg text-red-500';
+        playText.textContent = 'Detener Emisión';
+        rpmStatus.textContent = 'STATUS: ON AIR · 33 ⅓ RPM';
+        rpmStatus.className = 'text-vintage-gold font-bold';
+        
+        showToast('Conectando a la transmisión en vivo...', 'fa-solid fa-tower-broadcast');
+        
+        // Abrir automáticamente el modal si no ha sido cargado
+        setTimeout(() => {
+          toggleIframeModal(true);
+        }, 600);
+
+      } else {
+        // Pausar animación del tocadiscos
+        vinyl.classList.remove('animate-spin-slow');
+        tonearm.classList.remove('playing');
+        playIcon.className = 'fa-solid fa-play text-lg';
+        playText.textContent = 'Sintonizar Emisión';
+        rpmStatus.textContent = 'STATUS: STANDBY';
+        rpmStatus.className = 'text-slate-400 font-mono';
+        
+        showToast('Emisión pausada en cabina.', 'fa-solid fa-circle-pause');
+      }
+    }
+
+    function toggleIframeModal(forceOpen = null) {
+      const modal = document.getElementById('iframeModal');
+      const iframe = document.getElementById('radioIframe');
+      const shouldOpen = forceOpen !== null ? forceOpen : modal.classList.contains('hidden');
+
+      if (shouldOpen) {
+        // Cargar fuente del iframe si está vacía
+        if (iframe.src === 'about:blank' || !iframe.src) {
+          iframe.src = iframe.getAttribute('data-src');
+        }
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      } else {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+      }
+    }
+
+    function handleVolumeChange(val) {
+      audioVolume = val / 100;
+      document.getElementById('volPercentage').textContent = val + '%';
+    }
+
+    // ==========================================
+    // ECUALIZADOR ANALÓGICO / VÚMETRO (CANVAS)
+    // ==========================================
+    function initVisualizer() {
+      const canvas = document.getElementById('visualizerCanvas');
+      const ctx = canvas.getContext('2d');
+      
+      function resizeCanvas() {
+        canvas.width = canvas.parentElement.clientWidth;
+        canvas.height = 48;
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      const numBars = 36;
+      let phase = 0;
+
+      function renderBars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const barWidth = (canvas.width / numBars) - 2;
+
+        for (let i = 0; i < numBars; i++) {
+          let height;
+          if (isPlaying) {
+            // Generación de onda simulada orgánica cuando está reproduciendo
+            const val = Math.sin(phase + i * 0.3) * Math.cos(phase * 0.8 + i * 0.1);
+            height = Math.max(4, Math.abs(val) * (canvas.height - 8) * audioVolume);
+          } else {
+            // Ruido de fondo en standby
+            height = 3 + (Math.sin(phase + i) * 1.5);
+          }
+
+          const x = i * (barWidth + 2);
+          const y = canvas.height - height;
+
+          // Gradiente estilo analógico: Verde -> Ámbar -> Dorado
+          const grad = ctx.createLinearGradient(0, canvas.height, 0, 0);
+          grad.addColorStop(0, '#10b981');   // Verde base
+          grad.addColorStop(0.6, '#f59e0b'); // Ámbar medio
+          grad.addColorStop(1, '#e5a93c');   // Dorado tope
+
+          ctx.fillStyle = grad;
+          ctx.fillRect(x, y, barWidth, height);
+        }
+
+        phase += isPlaying ? 0.15 : 0.03;
+        requestAnimationFrame(renderBars);
+      }
+
+      renderBars();
+    }
+
+    // ==========================================
+    // MÓDULO OYENTES & MAPA INTERACTIVO
+    // ==========================================
+    function initCountries() {
+      const stored = localStorage.getItem('classic_radio_countries');
+      const countries = stored ? JSON.parse(stored) : defaultCountries;
+      renderCountriesList(countries);
+    }
+
+    function renderCountriesList(list) {
+      const container = document.getElementById('countriesBreakdownContainer');
+      container.innerHTML = '';
+
+      let total = 0;
+      list.forEach(c => total += c.count);
+      document.getElementById('totalListenersCounter').textContent = total;
+
+      list.forEach((country) => {
+        const percent = Math.round((country.count / total) * 100);
+        const row = document.createElement('div');
+        row.className = 'space-y-1';
+        row.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="flex items-center gap-1.5 font-medium text-slate-200">
+              <span>${country.flag}</span>
+              <span>${country.name}</span>
+            </span>
+            <span class="font-mono text-slate-400 font-bold">${country.count} <span class="text-[10px] text-slate-500 font-normal">(${percent}%)</span></span>
+          </div>
+          <div class="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-vintage-amber to-vintage-gold rounded-full transition-all duration-500" style="width: ${percent}%"></div>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function handleCheckin(e) {
+      e.preventDefault();
+      const name = document.getElementById('checkinName').value.trim();
+      const city = document.getElementById('checkinCity').value.trim();
+      const countryCode = document.getElementById('checkinCountry').value;
+
+      if (!name || !city) return;
+
+      const stored = localStorage.getItem('classic_radio_countries');
+      let list = stored ? JSON.parse(stored) : [...defaultCountries];
+
+      let target = list.find(c => c.code === countryCode);
+      if (target) {
+        target.count += 1;
+      } else {
+        list.push({ code: countryCode, name: city, flag: '📍', count: 1 });
+      }
+
+      localStorage.setItem('classic_radio_countries', JSON.stringify(list));
+      renderCountriesList(list);
+
+      // Actualizar aviso del último oyente
+      const latestEl = document.getElementById('latestCheckinAlert');
+      latestEl.innerHTML = `
+        <span class="text-xs">👋</span>
+        <span>Último reporte: <strong class="text-white">${name}</strong> desde <span class="text-vintage-gold">${city}</span></span>
+      `;
+
+      showToast(`¡Reporte recibido de ${name}! Sumado a las estadísticas.`, 'fa-solid fa-location-dot');
+      e.target.reset();
+    }
+
+    function autoReportUserLocation() {
+      showToast('Detectando coordenadas aproximadas...', 'fa-solid fa-compass');
+      setTimeout(() => {
+        document.getElementById('checkinCity').value = 'San José';
+        document.getElementById('checkinCountry').value = 'CR';
+        showToast('Ubicación preseleccionada: San José, Costa Rica 🇨🇷', 'fa-solid fa-check');
+      }, 700);
+    }
+
+    // ==========================================
+    // FORO DE LA COMUNIDAD & MURO INTERACTIVO
+    // ==========================================
+    function getForumPosts() {
+      const stored = localStorage.getItem('classic_radio_posts');
+      return stored ? JSON.parse(stored) : initialForumPosts;
+    }
+
+    function saveForumPosts(posts) {
+      localStorage.setItem('classic_radio_posts', JSON.stringify(posts));
+    }
+
+    function renderForum(categoryFilter = 'todos') {
+      const container = document.getElementById('forumPostsContainer');
+      container.innerHTML = '';
+      const posts = getForumPosts();
+
+      const filtered = categoryFilter === 'todos' 
+        ? posts 
+        : posts.filter(p => p.category === categoryFilter);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="glass-card p-8 rounded-2xl text-center text-slate-500 text-xs font-mono">
+            No hay mensajes en esta categoría todavía. ¡Sé el primero en compartir algo!
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(post => {
+        const card = document.createElement('div');
+        card.className = 'glass-card p-4 sm:p-5 rounded-2xl border border-vintage-cardborder hover:border-vintage-gold/30 transition-all space-y-3';
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-amber-600 to-yellow-600 flex items-center justify-center text-slate-950 font-bold text-xs">
+                ${post.author.charAt(0).toUpperCase()}
+              </div>
+              <div>
+                <h4 class="font-bold text-white text-sm leading-tight">${post.author}</h4>
+                <div class="flex items-center gap-2 text-[11px] text-slate-400 font-mono">
+                  <span>📍 ${post.location}</span>
+                  <span>•</span>
+                  <span>${post.date}</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-vintage-gold/15 text-vintage-gold border border-vintage-gold/25">
+              ${post.categoryLabel || post.category}
+            </span>
+          </div>
+
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">${post.content}</p>
+
+          <div class="flex items-center justify-between pt-2 border-t border-vintage-cardborder/50 text-xs">
+            <button onclick="likePost('${post.id}')" class="flex items-center gap-1.5 ${post.liked ? 'text-red-400 font-bold' : 'text-slate-400 hover:text-red-400'} transition-colors">
+              <i class="fa-${post.liked ? 'solid' : 'regular'} fa-heart"></i>
+              <span>${post.likes} Me gusta</span>
+            </button>
+
+            <button onclick="replyPostPrompt('${post.author}')" class="text-slate-400 hover:text-vintage-gold flex items-center gap-1 transition-colors">
+              <i class="fa-regular fa-comment"></i>
+              <span>Responder</span>
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function handlePostForum(e) {
+      e.preventDefault();
+      const author = document.getElementById('forumAuthor').value.trim();
+      const location = document.getElementById('forumLocation').value.trim();
+      const category = document.getElementById('forumCategory').value;
+      const content = document.getElementById('forumMessage').value.trim();
+
+      const catLabels = {
+        '70s80s': '70s & 80s',
+        'rock': 'Rock Clásico',
+        'baladas': 'Baladas',
+        'general': 'General'
+      };
+
+      const newPost = {
+        id: 'post-' + Date.now(),
+        author: author,
+        location: location,
+        category: category,
+        categoryLabel: catLabels[category],
+        date: 'Justo ahora',
+        content: content,
+        likes: 1,
+        liked: true
+      };
+
+      const posts = getForumPosts();
+      posts.unshift(newPost);
+      saveForumPosts(posts);
+      renderForum();
+
+      e.target.reset();
+      showToast('¡Tu mensaje ha sido fijado en el muro de cabina!', 'fa-solid fa-comment-check');
+    }
+
+    function likePost(id) {
+      const posts = getForumPosts();
+      const post = posts.find(p => p.id === id);
+      if (post) {
+        post.liked = !post.liked;
+        post.likes += post.liked ? 1 : -1;
+        saveForumPosts(posts);
+        renderForum();
+      }
+    }
+
+    function replyPostPrompt(author) {
+      document.getElementById('forumMessage').focus();
+      document.getElementById('forumMessage').value = `@${author}: `;
+      showToast(`Respondiendo a ${author}...`, 'fa-solid fa-reply');
+    }
+
+    function filterForum(category) {
+      // Estilizar botones de filtro
+      const buttons = ['todos', '70s80s', 'rock', 'baladas'];
+      buttons.forEach(b => {
+        const btn = document.getElementById(`filter-${b}`);
+        if (btn) {
+          if (b === category) {
+            btn.className = 'px-3 py-1.5 rounded-lg bg-vintage-gold text-slate-950 font-bold transition-all';
+          } else {
+            btn.className = 'px-3 py-1.5 rounded-lg bg-vintage-card text-slate-300 hover:text-white border border-vintage-cardborder transition-all';
+          }
+        }
+      });
+
+      renderForum(category);
+    }
+
+    // ==========================================
+    // PARRILLA DE PROGRAMACIÓN Y PETICIONES
+    // ==========================================
+    function showSchedule(day) {
+      const tabs = ['lun', 'mar', 'mie', 'jue', 'vie', 'fin'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+        if (btn) {
+          if (t === day) {
+            btn.className = 'schedule-tab px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-vintage-gold text-slate-950';
+          } else {
+            btn.className = 'schedule-tab px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-900 text-slate-400 hover:text-white';
+          }
+        }
+      });
+
+      const container = document.getElementById('scheduleContent');
+      container.innerHTML = '';
+      const list = scheduleData[day] || [];
+
+      list.forEach(show => {
+        const item = document.createElement('div');
+        item.className = 'p-3 rounded-xl bg-slate-900/80 border border-vintage-cardborder/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2';
+        item.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-white">${show.title}</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-0.5">${show.desc}</p>
+          </div>
+          <span class="text-xs font-mono font-bold text-vintage-gold bg-vintage-gold/10 px-2 py-1 rounded border border-vintage-gold/20 whitespace-nowrap self-start sm:self-center">
+            ${show.time}
+          </span>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function renderRequests() {
+      const container = document.getElementById('recentRequestsList');
+      container.innerHTML = '';
+      initialRequests.forEach(req => {
+        const row = document.createElement('div');
+        row.className = 'p-2 rounded-lg bg-slate-900/60 border border-vintage-cardborder/40 flex items-center justify-between gap-2 text-[11px]';
+        row.innerHTML = `
+          <div>
+            <span class="font-bold text-slate-200">${req.song}</span>
+            <span class="text-slate-500 block">${req.dedication}</span>
+          </div>
+          <span class="text-vintage-gold font-mono text-[10px] whitespace-nowrap">${req.time}</span>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function handleSongRequest(e) {
+      e.preventDefault();
+      const song = document.getElementById('reqSong').value.trim();
+      const dedication = document.getElementById('reqDedication').value.trim();
+
+      if (!song) return;
+
+      initialRequests.unshift({
+        song: song,
+        dedication: dedication || 'Pedido para cabina',
+        time: 'Justo ahora'
+      });
+
+      if (initialRequests.length > 5) initialRequests.pop();
+      renderRequests();
+      e.target.reset();
+
+      showToast('¡Canción enviada al operador de Classic Radio CR!', 'fa-solid fa-music');
+    }
+
+    // ==========================================
+    // NOTIFICACIÓN TOAST FLOTANTE
+    // ==========================================
+    let toastTimeout = null;
+    function showToast(message, iconClass = 'fa-solid fa-circle-check') {
+      const toast = document.getElementById('toastMessage');
+      const text = document.getElementById('toastText');
+      const icon = document.getElementById('toastIcon');
+
+      text.textContent = message;
+      icon.className = `${iconClass} text-vintage-gold text-lg`;
+
+      toast.classList.remove('translate-y-32', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-32', 'opacity-0');
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
