@@ -1,1199 +1,446 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Classic Radio CR | Lo Mejor de los 60s, 70s, 80s y 90s</title>
-
-  <!-- Tailwind CSS CDN -->
+  <title>Classic Radio CR - Clásicos de los 60s, 70s, 80s y 90s</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Google Fonts: Syne & Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            vintage: {
-              gold: '#d4af37',
-              lightgold: '#f3c642',
-              amber: '#f59e0b',
-              dark: '#0c0c11',
-              surface: '#15151d',
-              card: '#1c1c27',
-              cardborder: '#2c2c3d'
-            }
-          },
-          fontFamily: {
-            heading: ['Syne', 'sans-serif'],
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace']
-          },
-          animation: {
-            'spin-slow': 'spin 10s linear infinite',
-            'pulse-subtle': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+            brandDark: '#0f0f12',
+            cardDark: '#18181f',
+            cardBorder: '#282833',
+            goldAccent: '#d4af37',
+            goldHover: '#f5c84c',
           }
         }
       }
     }
   </script>
-
   <style>
-    /* Efecto de vinilo analógico */
-    .vinyl-grooves {
-      background: radial-gradient(circle, #1a1a24 18%, #0d0d12 19%, #0d0d12 34%, #191924 35%, #191924 49%, #0f0f14 50%, #0f0f14 64%, #181822 65%, #181822 79%, #0a0a0e 80%);
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.95), inset 0 0 15px rgba(212, 175, 55, 0.15);
-    }
-    .vinyl-sheen {
-      background: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.06) 100%);
-    }
-
-    /* Brazo de tocadiscos */
-    .tonearm {
-      transform-origin: 20px 20px;
-      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .tonearm.playing {
-      transform: rotate(24deg);
-    }
-
-    /* Paneles de cristal oscuro */
-    .glass-panel {
-      background: rgba(21, 21, 29, 0.85);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(212, 175, 55, 0.12);
-    }
-
-    .glass-card {
-      background: rgba(28, 28, 39, 0.7);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(44, 44, 61, 0.8);
-    }
-
-    ::-webkit-scrollbar {
-      width: 7px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0c0c11;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #262637;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #d4af37;
-    }
+    html { scroll-behavior: smooth; }
   </style>
 </head>
-<body class="bg-vintage-dark text-slate-100 font-sans min-h-screen flex flex-col selection:bg-vintage-gold selection:text-black">
+<body class="bg-brandDark text-gray-200 min-h-screen flex flex-col font-sans">
 
-  <!-- ============================================== -->
-  <!-- NAVEGACIÓN SUPERIOR / ENCABEZADO -->
-  <!-- ============================================== -->
-  <header class="sticky top-0 z-50 glass-panel border-b border-vintage-cardborder">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-      
-      <!-- Marca principal (sin duplicar CR) -->
-      <a href="#reproductor" class="flex items-center gap-3.5 group">
-        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-vintage-gold to-yellow-600 flex items-center justify-center shadow-lg shadow-vintage-gold/20 group-hover:scale-105 transition-transform">
-          <i class="fa-solid fa-compact-disc text-2xl text-slate-950 animate-spin-slow"></i>
-        </div>
-        <div>
-          <span class="font-heading font-extrabold text-2xl tracking-wide text-white group-hover:text-vintage-gold transition-colors">
-            Classic Radio <span class="text-vintage-gold">CR</span>
-          </span>
-          <p class="text-[11px] text-slate-400 font-mono tracking-tight">60s · 70s · 80s · 90s</p>
-        </div>
-      </a>
-
-      <!-- Navegación de escritorio con enlaces suaves funcionales -->
-      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
-        <a href="#reproductor" class="hover:text-vintage-gold transition-colors flex items-center gap-1.5"><i class="fa-solid fa-play text-vintage-gold text-xs"></i> Transmisión</a>
-        <a href="#oyentes" class="hover:text-vintage-gold transition-colors flex items-center gap-1.5"><i class="fa-solid fa-earth-americas text-xs"></i> Oyentes</a>
-        <a href="#foro" class="hover:text-vintage-gold transition-colors flex items-center gap-1.5"><i class="fa-solid fa-comments text-xs"></i> Foro</a>
-        <a href="#peticiones" class="hover:text-vintage-gold transition-colors flex items-center gap-1.5"><i class="fa-solid fa-music text-xs"></i> Peticiones</a>
-        <a href="#programacion" class="hover:text-vintage-gold transition-colors flex items-center gap-1.5"><i class="fa-solid fa-calendar-day text-xs"></i> Programación</a>
-      </nav>
-
-      <!-- Indicador En Vivo y botón de menú móvil -->
+  <!-- Navegación -->
+  <header class="bg-cardDark/95 border-b border-cardBorder sticky top-0 z-50 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse-subtle"></span>
-          <span>EN VIVO</span>
-        </div>
-
-        <!-- Botón menú móvil -->
-        <button onclick="toggleMobileNav()" class="md:hidden p-2 rounded-lg bg-vintage-card border border-vintage-cardborder text-slate-300 hover:text-white">
-          <i id="navToggleIcon" class="fa-solid fa-bars text-lg"></i>
-        </button>
+        <i class="fa-solid fa-radio text-goldAccent text-2xl"></i>
+        <span class="text-xl font-bold tracking-wider text-white">Classic Radio CR</span>
       </div>
 
-    </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm text-gray-300">
+        <a href="#reproductor" class="hover:text-goldAccent transition">Transmisión</a>
+        <a href="#oyentes" class="hover:text-goldAccent transition">Oyentes</a>
+        <a href="#foro" class="hover:text-goldAccent transition">Foro</a>
+        <a href="#peticiones" class="hover:text-goldAccent transition">Peticiones</a>
+        <a href="#programacion" class="hover:text-goldAccent transition">Programación</a>
+      </nav>
 
-    <!-- Menú Desplegable Móvil -->
-    <div id="mobileNavMenu" class="hidden md:hidden border-t border-vintage-cardborder bg-vintage-surface/95 px-4 py-4 space-y-3">
-      <a href="#reproductor" onclick="toggleMobileNav()" class="block text-sm text-slate-300 hover:text-vintage-gold py-1.5"><i class="fa-solid fa-play text-vintage-gold mr-2"></i> Transmisión</a>
-      <a href="#oyentes" onclick="toggleMobileNav()" class="block text-sm text-slate-300 hover:text-vintage-gold py-1.5"><i class="fa-solid fa-earth-americas text-vintage-gold mr-2"></i> Oyentes</a>
-      <a href="#foro" onclick="toggleMobileNav()" class="block text-sm text-slate-300 hover:text-vintage-gold py-1.5"><i class="fa-solid fa-comments text-vintage-gold mr-2"></i> Foro de Cabina</a>
-      <a href="#peticiones" onclick="toggleMobileNav()" class="block text-sm text-slate-300 hover:text-vintage-gold py-1.5"><i class="fa-solid fa-music text-vintage-gold mr-2"></i> Peticiones Musicales</a>
-      <a href="#programacion" onclick="toggleMobileNav()" class="block text-sm text-slate-300 hover:text-vintage-gold py-1.5"><i class="fa-solid fa-calendar-day text-vintage-gold mr-2"></i> Programación</a>
+      <div class="flex items-center gap-2 bg-emerald-950/60 text-emerald-400 border border-emerald-800/80 px-3 py-1 rounded-full text-xs font-semibold">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+        <span>EN VIVO</span>
+      </div>
     </div>
   </header>
 
-  <!-- ============================================== -->
-  <!-- NOTIFICACIÓN TOAST -->
-  <!-- ============================================== -->
-  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 bg-vintage-card border border-vintage-gold/50 text-white px-5 py-3 rounded-xl shadow-2xl">
-    <i id="toastIcon" class="fa-solid fa-circle-check text-vintage-gold text-lg"></i>
-    <span id="toastMsg" class="text-sm font-medium">Operación realizada</span>
-  </div>
+  <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full space-y-12">
 
-  <!-- ============================================== -->
-  <!-- CONTENIDO CENTRAL -->
-  <!-- ============================================== -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-14">
-
-    <!-- ============================================== -->
-    <!-- 1. SECCIÓN REPRODUCTOR DE CABINA -->
-    <!-- ============================================== -->
-    <section id="reproductor" class="scroll-mt-24">
-      <div class="relative glass-card rounded-3xl p-6 sm:p-8 lg:p-10 border border-vintage-cardborder shadow-2xl overflow-hidden">
+    <!-- SECCIÓN REPRODUCTOR DE RADIO -->
+    <section id="reproductor" class="bg-cardDark border border-cardBorder rounded-2xl p-6 md:p-8 shadow-2xl">
+      <div class="max-w-3xl mx-auto flex flex-col items-center text-center">
+        <h2 class="text-2xl font-bold text-white mb-2">Transmisión Oficial en Directo</h2>
+        <p class="text-sm text-gray-400 mb-6">Sintoniza nuestra emisión en vivo directamente a través del reproductor:</p>
         
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          
-          <!-- Tocadiscos Hi-Fi Analógico -->
-          <div class="lg:col-span-5 flex flex-col items-center justify-center">
-            <div class="relative w-64 h-64 sm:w-72 sm:h-72 bg-[#101015] rounded-3xl p-4 border border-vintage-cardborder shadow-[inset_0_2px_12px_rgba(0,0,0,0.8)] flex items-center justify-center">
-              
-              <!-- Disco de Vinilo -->
-              <div id="vinylDisc" class="relative w-56 h-56 sm:w-60 sm:h-60 rounded-full vinyl-grooves flex items-center justify-center transition-all duration-700">
-                <div class="absolute inset-0 rounded-full vinyl-sheen pointer-events-none"></div>
-                
-                <!-- Galleta del vinilo -->
-                <div class="w-24 h-24 rounded-full bg-gradient-to-br from-amber-600 via-vintage-gold to-yellow-800 border-4 border-slate-950 flex flex-col items-center justify-center text-center p-1 shadow-md">
-                  <span class="text-[9px] font-mono text-black font-extrabold uppercase tracking-widest">CLASSIC</span>
-                  <span class="text-xs font-heading font-black text-slate-950 leading-tight">RADIO CR</span>
-                  <span class="text-[8px] text-slate-900 font-bold">33 ⅓ RPM</span>
-                  <div class="w-3.5 h-3.5 rounded-full bg-slate-950 border border-vintage-gold mt-1"></div>
-                </div>
-              </div>
-
-              <!-- Brazo analógico (Tonearm) -->
-              <div class="absolute top-4 right-4 w-16 h-36 pointer-events-none">
-                <svg viewBox="0 0 60 140" class="w-full h-full">
-                  <circle cx="20" cy="20" r="14" fill="#2d2d3d" stroke="#d4af37" stroke-width="2"/>
-                  <circle cx="20" cy="20" r="6" fill="#121217"/>
-                  <g id="tonearmElement" class="tonearm">
-                    <path d="M 20 20 L 22 80 L 16 115" stroke="#9ca3af" stroke-width="4" stroke-linecap="round" fill="none"/>
-                    <rect x="14" y="2" width="12" height="14" rx="2" fill="#4b5563"/>
-                    <polygon points="12,115 20,115 18,132 14,132" fill="#d4af37"/>
-                  </g>
-                </svg>
-              </div>
-
-              <div class="absolute bottom-3 left-4 text-[10px] font-mono text-slate-400 bg-slate-900/90 px-2 py-0.5 rounded border border-white/5">
-                <span id="vinylStatus">ESPERANDO SINTONÍA</span>
-              </div>
-            </div>
-
-            <!-- Botón de Conexión Principal -->
-            <div class="flex items-center gap-4 mt-6">
-              <button id="mainPlayBtn" onclick="togglePlayAction()" 
-                class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-vintage-gold to-yellow-500 hover:from-yellow-400 hover:to-vintage-gold text-slate-950 font-bold text-sm sm:text-base flex items-center gap-3 shadow-xl shadow-vintage-gold/20 transition-all hover:scale-105 active:scale-95">
-                <i id="mainPlayIcon" class="fa-solid fa-play text-lg"></i>
-                <span id="mainPlayText">Encender Radio</span>
-              </button>
-
-              <button onclick="togglePlayerFrame()" 
-                class="p-3.5 rounded-2xl bg-vintage-surface hover:bg-vintage-card border border-vintage-cardborder text-slate-300 hover:text-vintage-gold transition-all"
-                title="Mostrar/Ocultar reproductor integrado">
-                <i class="fa-solid fa-tv text-lg"></i>
-              </button>
-            </div>
-          </div>
-
-          <!-- Cabina y Ecualizador -->
-          <div class="lg:col-span-7 flex flex-col justify-between space-y-6">
-            <div>
-              <h1 class="text-3xl sm:text-4xl font-heading font-black text-white tracking-tight">
-                Classic Radio <span class="text-vintage-gold">CR</span>
-              </h1>
-              <p class="text-slate-400 text-sm mt-1">
-                La mejor selección de baladas, rock clásico, disco y pop que marcaron época.
-              </p>
-            </div>
-
-            <!-- Panel de audio en vivo -->
-            <div class="p-5 rounded-2xl bg-black/60 border border-vintage-cardborder relative">
-              <div class="flex items-start justify-between gap-4">
-                <div>
-                  <span class="text-[10px] font-mono text-vintage-gold tracking-widest uppercase block mb-1">CABINA AL AIRE</span>
-                  <h3 class="text-lg sm:text-xl font-bold text-white">Transmisión Oficial en Directo</h3>
-                  <p class="text-slate-400 text-xs sm:text-sm mt-0.5">Música continua desde San José, Costa Rica</p>
-                </div>
-                <div class="text-right font-mono">
-                  <span class="text-[10px] text-slate-400 block">HORA LOCAL</span>
-                  <span id="radioClock" class="text-lg font-bold text-vintage-gold">--:--:--</span>
-                </div>
-              </div>
-
-              <!-- Vúmetro / Spectrum Canvas -->
-              <div class="mt-4 pt-3 border-t border-slate-800/80">
-                <div class="flex justify-between items-center mb-1 text-[10px] font-mono text-slate-500">
-                  <span>ANALIZADOR DE ESPECTRO HI-FI</span>
-                  <span>MONITOR ESTÉREO</span>
-                </div>
-                <canvas id="audioVisualizer" class="w-full h-12 rounded bg-slate-950/80 border border-slate-900"></canvas>
-              </div>
-            </div>
-
-            <!-- Controles y Enlace de emergencia -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="flex items-center gap-3 p-3 rounded-xl bg-vintage-surface border border-vintage-cardborder">
-                <i class="fa-solid fa-volume-high text-vintage-gold text-sm pl-1"></i>
-                <div class="flex-1">
-                  <div class="flex justify-between text-[11px] font-mono text-slate-400 mb-1">
-                    <span>NIVEL DE VOLUMEN</span>
-                    <span id="volLabel">85%</span>
-                  </div>
-                  <input type="range" min="0" max="100" value="85" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-vintage-gold" oninput="setAudioVolume(this.value)">
-                </div>
-              </div>
-
-              <div class="flex items-center justify-between p-3 rounded-xl bg-vintage-surface border border-vintage-cardborder">
-                <div class="text-xs">
-                  <span class="font-bold text-slate-200 block">Enlace Externo</span>
-                  <span class="text-[11px] text-slate-400">Si tu navegador no reproduce</span>
-                </div>
-                <a href="http://classicradiocr.radio12345.com/" target="_blank" rel="noopener noreferrer" 
-                   class="px-3 py-1.5 rounded-lg bg-vintage-card hover:bg-vintage-cardborder border border-vintage-gold/30 text-vintage-gold text-xs font-semibold flex items-center gap-1.5">
-                  <span>Abrir Web</span>
-                  <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                </a>
-              </div>
-            </div>
-
-          </div>
-
+        <!-- Marco Embebido del Reproductor de la Radio -->
+        <div class="w-full h-80 bg-black rounded-xl border border-cardBorder overflow-hidden shadow-inner">
+          <iframe 
+            src="http://classicradiocr.radio12345.com/" 
+            title="Reproductor Classic Radio CR"
+            class="w-full h-full border-0"
+            allow="autoplay; encrypted-media">
+          </iframe>
         </div>
 
-        <!-- Reproductor Embebido Iframe (Ocultable) -->
-        <div id="playerFrameContainer" class="mt-8 pt-6 border-t border-vintage-cardborder/60">
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-mono text-slate-400 flex items-center gap-2">
-              <i class="fa-solid fa-radio text-vintage-gold"></i>
-              <span>REPRODUCTOR INTEGRADO DE EMISIÓN</span>
-            </span>
-            <button onclick="togglePlayerFrame()" class="text-xs text-slate-400 hover:text-white font-mono">
-              <i class="fa-solid fa-chevron-up mr-1"></i> Plegar
-            </button>
-          </div>
-          <div class="w-full h-72 sm:h-80 bg-black rounded-2xl overflow-hidden border border-vintage-cardborder">
-            <iframe 
-              id="liveStreamIframe"
-              src="http://classicradiocr.radio12345.com/" 
-              title="Classic Radio CR Stream"
-              class="w-full h-full border-0"
-              allow="autoplay">
-            </iframe>
-          </div>
+        <div class="mt-4 flex flex-wrap gap-4 items-center justify-center">
+          <a href="http://classicradiocr.radio12345.com/" target="_blank" rel="noopener noreferrer" 
+             class="bg-goldAccent hover:bg-goldHover text-black font-bold px-6 py-2.5 rounded-full text-sm flex items-center gap-2 shadow-lg transition">
+            <i class="fa-solid fa-up-right-from-square"></i> Abrir en Pestaña Directa
+          </a>
         </div>
-
       </div>
     </section>
 
-    <!-- ============================================================== -->
-    <!-- 2. SECCIÓN OYENTES EN VIVO POR CONTINENTE Y PAÍS (INICIA EN 0) -->
-    <!-- ============================================================== -->
-    <section id="oyentes" class="scroll-mt-24 space-y-6">
-      
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-vintage-cardborder pb-4">
+    <!-- SECCIÓN OYENTES POR CONTINENTE -->
+    <section id="oyentes" class="bg-cardDark border border-cardBorder rounded-2xl p-6 md:p-8">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-cardBorder pb-4 mb-6">
         <div>
-          <span class="text-xs font-mono text-vintage-gold uppercase tracking-wider font-semibold">MÉTRICAS EN TIEMPO REAL</span>
-          <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-white">Oyentes en Vivo</h2>
-          <p class="text-slate-400 text-sm mt-1">Conteo directo de sintonía en cabina por regiones y países.</p>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-earth-americas text-goldAccent"></i> Registro de Oyentes
+          </h2>
+          <p class="text-sm text-gray-400">Reportes de sintonía en tiempo real.</p>
         </div>
-
-        <div class="flex items-center gap-3">
-          <button onclick="reportListenerTuning()" class="px-4 py-2.5 rounded-xl bg-vintage-gold hover:bg-vintage-lightgold text-slate-950 font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg transition-all active:scale-95">
-            <i class="fa-solid fa-tower-cell"></i>
-            <span>Estoy escuchando ahora</span>
-          </button>
-          <button onclick="resetListenersCounter()" title="Reiniciar contadores para pruebas" class="p-2.5 rounded-xl bg-vintage-card hover:bg-vintage-cardborder border border-vintage-cardborder text-slate-400 hover:text-red-400 transition-colors text-xs font-mono">
-            <i class="fa-solid fa-rotate-left"></i>
-          </button>
+        <div class="flex gap-4">
+          <div class="bg-brandDark px-4 py-2 rounded-xl border border-cardBorder text-center">
+            <span class="block text-xl font-bold text-goldAccent" id="totalListenersCount">0</span>
+            <span class="text-[11px] text-gray-400 uppercase tracking-wider">Oyentes Totales</span>
+          </div>
+          <div class="bg-brandDark px-4 py-2 rounded-xl border border-cardBorder text-center">
+            <span class="block text-xl font-bold text-emerald-400" id="totalCountriesCount">0</span>
+            <span class="text-[11px] text-gray-400 uppercase tracking-wider">Regiones</span>
+          </div>
         </div>
       </div>
 
-      <!-- Contadores Principales (Empiezan en 0) -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        <div class="glass-card p-5 rounded-2xl border border-vintage-cardborder">
-          <span class="text-xs font-mono text-slate-400 uppercase">OYENTES ACTIVOS</span>
-          <div class="mt-2 flex items-baseline gap-2">
-            <span id="activeListenersCount" class="text-4xl font-heading font-black text-white">0</span>
-            <span class="text-xs text-emerald-400 font-mono">en sintonía</span>
-          </div>
-          <p class="text-[11px] text-slate-500 mt-2">Se actualiza con cada oyente reportado</p>
-        </div>
-
-        <div class="glass-card p-5 rounded-2xl border border-vintage-cardborder">
-          <span class="text-xs font-mono text-slate-400 uppercase">PAÍSES REPRESENTADOS</span>
-          <div class="mt-2 flex items-baseline gap-2">
-            <span id="activeCountriesCount" class="text-4xl font-heading font-black text-vintage-gold">0</span>
-            <span class="text-xs text-slate-400 font-mono">naciones</span>
-          </div>
-          <p class="text-[11px] text-slate-500 mt-2">Diversidad de audiencia en vivo</p>
-        </div>
-
-        <div class="glass-card p-5 rounded-2xl border border-vintage-cardborder">
-          <span class="text-xs font-mono text-slate-400 uppercase">REGIÓN DESTACADA</span>
-          <div class="mt-2 flex items-baseline gap-2">
-            <span id="topRegionLabel" class="text-2xl font-heading font-black text-slate-300">Sin datos</span>
-          </div>
-          <p id="topRegionSub" class="text-[11px] text-slate-500 mt-2">Esperando los primeros reportes</p>
-        </div>
-
-      </div>
-
-      <!-- Distribución por Continente & Lista de Países -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        
-        <!-- Tarjeta Continentes -->
-        <div class="lg:col-span-6 glass-card p-6 rounded-3xl border border-vintage-cardborder space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="font-heading font-bold text-white text-base flex items-center gap-2">
-              <i class="fa-solid fa-globe text-vintage-gold"></i>
-              <span>Audiencia por Continente</span>
-            </h3>
-            <span class="text-xs font-mono text-slate-400">Distribución</span>
-          </div>
-
-          <div id="continentsContainer" class="space-y-3 pt-2">
-            <!-- Renderizado dinámicamente -->
-          </div>
-        </div>
-
-        <!-- Tarjeta Lista de Países Activos -->
-        <div class="lg:col-span-6 glass-card p-6 rounded-3xl border border-vintage-cardborder space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="font-heading font-bold text-white text-base flex items-center gap-2">
-              <i class="fa-solid fa-flag text-vintage-gold"></i>
-              <span>Países y Ciudades Conectadas</span>
-            </h3>
-            <span id="countriesTotalBadge" class="text-xs font-mono bg-vintage-gold/15 text-vintage-gold px-2 py-0.5 rounded border border-vintage-gold/25">0 Países</span>
-          </div>
-
-          <div id="countriesListContainer" class="space-y-2 max-h-72 overflow-y-auto pr-1">
-            <!-- Renderizado dinámicamente -->
-          </div>
-
-          <!-- Formulario manual de reporte de sintonía -->
-          <form id="tuningReportForm" onsubmit="handleManualTuning(event)" class="pt-3 border-t border-vintage-cardborder/80 grid grid-cols-3 gap-2 text-xs">
-            <input type="text" id="manualCity" placeholder="Tu ciudad (ej. Cartago)" required
-              class="col-span-1 bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl px-3 py-2 text-white outline-none">
-            
-            <select id="manualCountry" required
-              class="col-span-1 bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl px-2 py-2 text-white outline-none">
-              <option value="CR|América Central|🇨🇷 Costa Rica" selected>🇨🇷 Costa Rica</option>
-              <option value="MX|América del Norte|🇲🇽 México">🇲🇽 México</option>
-              <option value="US|América del Norte|🇺🇸 Estados Unidos">🇺🇸 Estados Unidos</option>
-              <option value="ES|Europa|🇪🇸 España">🇪🇸 España</option>
-              <option value="CO|América del Sur|🇨🇴 Colombia">🇨🇴 Colombia</option>
-              <option value="AR|América del Sur|🇦🇷 Argentina">🇦🇷 Argentina</option>
-              <option value="CL|América del Sur|🇨🇱 Chile">🇨🇱 Chile</option>
-              <option value="PA|América Central|🇵🇦 Panamá">🇵🇦 Panamá</option>
-              <option value="OT|Otros|🌎 Otro País">🌎 Otro País</option>
-            </select>
-
-            <button type="submit" class="col-span-1 bg-vintage-card hover:bg-vintage-cardborder border border-vintage-gold/40 text-vintage-gold font-bold rounded-xl transition-all flex items-center justify-center gap-1">
-              <i class="fa-solid fa-plus text-[10px]"></i>
-              <span>Reportar</span>
-            </button>
-          </form>
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- ============================================================== -->
-    <!-- 3. SECCIÓN FORO DE CABINA (EMPIEZA LIMPIO SIN EJEMPLOS) -->
-    <!-- ============================================================== -->
-    <section id="foro" class="scroll-mt-24 space-y-6">
-      
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-vintage-cardborder pb-4">
-        <div>
-          <span class="text-xs font-mono text-vintage-gold uppercase tracking-wider font-semibold">COMUNIDAD MUSICAL</span>
-          <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-white">Foro de Oyentes</h2>
-          <p class="text-slate-400 text-sm mt-1">Comparte tus opiniones sobre las canciones, conciertos y clásicos favoritos.</p>
-        </div>
-
-        <!-- Filtros por Décadas -->
-        <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
-          <button onclick="filterForum('todas')" id="filter-todas" class="px-3 py-1.5 rounded-lg bg-vintage-gold text-slate-950 font-bold transition-all">Todas</button>
-          <button onclick="filterForum('60s')" id="filter-60s" class="px-3 py-1.5 rounded-lg bg-vintage-card text-slate-300 hover:text-white border border-vintage-cardborder transition-all">60s</button>
-          <button onclick="filterForum('70s')" id="filter-70s" class="px-3 py-1.5 rounded-lg bg-vintage-card text-slate-300 hover:text-white border border-vintage-cardborder transition-all">70s</button>
-          <button onclick="filterForum('80s')" id="filter-80s" class="px-3 py-1.5 rounded-lg bg-vintage-card text-slate-300 hover:text-white border border-vintage-cardborder transition-all">80s</button>
-          <button onclick="filterForum('90s')" id="filter-90s" class="px-3 py-1.5 rounded-lg bg-vintage-card text-slate-300 hover:text-white border border-vintage-cardborder transition-all">90s</button>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        
-        <!-- Formulario para publicar en el foro -->
-        <div class="lg:col-span-4 glass-card p-6 rounded-3xl border border-vintage-cardborder space-y-4">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-vintage-gold/20 text-vintage-gold flex items-center justify-center font-bold">
-              <i class="fa-solid fa-pen-nib text-sm"></i>
-            </div>
-            <div>
-              <h3 class="font-heading font-bold text-white text-base">Crear un Nuevo Tema</h3>
-              <p class="text-[11px] text-slate-400">Publicación inmediata para la audiencia.</p>
-            </div>
-          </div>
-
-          <form id="newForumForm" onsubmit="handleNewForumPost(event)" class="space-y-3">
-            <div>
-              <label class="block text-[11px] font-mono text-slate-400 mb-1">TÍTULO DEL TEMA</label>
-              <input type="text" id="forumTitleInput" placeholder="Ej. El mejor solo de guitarra de los 70s" required
-                class="w-full bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 outline-none">
-            </div>
-
-            <div class="grid grid-cols-2 gap-2">
+        <!-- Formulario de sintonía -->
+        <div class="bg-brandDark/70 p-5 rounded-xl border border-cardBorder flex flex-col justify-between">
+          <div>
+            <h3 class="text-sm font-bold text-white mb-3">📍 Reportar mi Sintonía</h3>
+            <form id="checkinForm" onsubmit="handleCheckin(event)" class="space-y-3">
               <div>
-                <label class="block text-[11px] font-mono text-slate-400 mb-1">TU NOMBRE / ALIAS</label>
-                <input type="text" id="forumAuthorInput" placeholder="Ej. Roberto CR" required
-                  class="w-full bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-600 outline-none">
+                <label class="block text-xs text-gray-400 mb-1">Nombre o Apodo</label>
+                <input type="text" id="checkinName" required placeholder="Tu nombre" 
+                       class="w-full bg-cardDark border border-cardBorder rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-goldAccent">
               </div>
               <div>
-                <label class="block text-[11px] font-mono text-slate-400 mb-1">DÉCADA / CATEGORÍA</label>
-                <select id="forumCategoryInput" class="w-full bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl px-3 py-2 text-xs text-white outline-none">
-                  <option value="60s">Años 60s</option>
-                  <option value="70s">Años 70s</option>
-                  <option value="80s" selected>Años 80s</option>
-                  <option value="90s">Años 90s</option>
-                  <option value="general">General</option>
+                <label class="block text-xs text-gray-400 mb-1">Ciudad / Provincia</label>
+                <input type="text" id="checkinCity" required placeholder="Ej: San José, Cartago..." 
+                       class="w-full bg-cardDark border border-cardBorder rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-goldAccent">
+              </div>
+              <div>
+                <label class="block text-xs text-gray-400 mb-1">Continente</label>
+                <select id="checkinContinent" required 
+                        class="w-full bg-cardDark border border-cardBorder rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-goldAccent">
+                  <option value="centroamerica">América Central</option>
+                  <option value="norteamerica">América del Norte</option>
+                  <option value="sudamerica">América del Sur</option>
+                  <option value="europa">Europa</option>
+                  <option value="otros">Otros</option>
                 </select>
               </div>
-            </div>
-
-            <div>
-              <label class="block text-[11px] font-mono text-slate-400 mb-1">MENSAJE O COMENTARIO</label>
-              <textarea id="forumMessageInput" rows="3" placeholder="Comparte tu opinión, recuerdos de una canción o pregunta a la comunidad..." required
-                class="w-full bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl p-3 text-xs text-white placeholder-slate-600 outline-none resize-none"></textarea>
-            </div>
-
-            <button type="submit" 
-              class="w-full py-3 rounded-xl bg-vintage-gold hover:bg-vintage-lightgold text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95">
-              <i class="fa-solid fa-paper-plane"></i>
-              <span>Publicar Tema</span>
-            </button>
-          </form>
+              <button type="submit" 
+                      class="w-full bg-goldAccent hover:bg-goldHover text-black font-bold py-2 rounded-lg text-sm transition mt-2">
+                Reportar Sintonía
+              </button>
+            </form>
+          </div>
+          <button onclick="resetMetrics()" class="text-[11px] text-gray-500 hover:text-gray-300 text-center mt-4 underline">
+            Reiniciar contadores a 0
+          </button>
         </div>
 
-        <!-- Lista de Temas del Foro -->
-        <div class="lg:col-span-8 space-y-4">
-          <div id="forumListContainer" class="space-y-3.5">
-            <!-- Empieza vacío hasta que los usuarios publiquen -->
+        <!-- Desglose por continentes -->
+        <div class="lg:col-span-2 bg-brandDark/70 p-5 rounded-xl border border-cardBorder flex flex-col justify-between">
+          <div>
+            <h3 class="text-sm font-bold text-white mb-4">Distribución por Continente</h3>
+            <div class="space-y-3 text-xs" id="continentBars">
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span>América Central</span>
+                  <span id="cnt-centroamerica">0 oyentes</span>
+                </div>
+                <div class="w-full bg-cardDark rounded-full h-2 overflow-hidden border border-cardBorder">
+                  <div id="bar-centroamerica" class="bg-goldAccent h-full w-0 transition-all duration-500"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span>América del Norte</span>
+                  <span id="cnt-norteamerica">0 oyentes</span>
+                </div>
+                <div class="w-full bg-cardDark rounded-full h-2 overflow-hidden border border-cardBorder">
+                  <div id="bar-norteamerica" class="bg-goldAccent h-full w-0 transition-all duration-500"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span>América del Sur</span>
+                  <span id="cnt-sudamerica">0 oyentes</span>
+                </div>
+                <div class="w-full bg-cardDark rounded-full h-2 overflow-hidden border border-cardBorder">
+                  <div id="bar-sudamerica" class="bg-goldAccent h-full w-0 transition-all duration-500"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span>Europa</span>
+                  <span id="cnt-europa">0 oyentes</span>
+                </div>
+                <div class="w-full bg-cardDark rounded-full h-2 overflow-hidden border border-cardBorder">
+                  <div id="bar-europa" class="bg-goldAccent h-full w-0 transition-all duration-500"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span>Otros</span>
+                  <span id="cnt-otros">0 oyentes</span>
+                </div>
+                <div class="w-full bg-cardDark rounded-full h-2 overflow-hidden border border-cardBorder">
+                  <div id="bar-otros" class="bg-goldAccent h-full w-0 transition-all duration-500"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 border-t border-cardBorder pt-4">
+            <h4 class="text-xs font-bold text-gray-300 mb-2">Últimos reportes recibidos:</h4>
+            <div id="listenersLog" class="text-xs text-gray-500 italic max-h-24 overflow-y-auto space-y-1">
+              Aún no hay reportes de sintonía registrados.
+            </div>
           </div>
         </div>
 
       </div>
-
     </section>
 
-    <!-- ============================================================== -->
-    <!-- 4. SECCIÓN PETICIONES MUSICALES (EMPIEZA LIMPIO) -->
-    <!-- ============================================================== -->
-    <section id="peticiones" class="scroll-mt-24 space-y-6">
+    <!-- SECCIÓN FORO Y PETICIONES -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       
-      <div class="border-b border-vintage-cardborder pb-4">
-        <span class="text-xs font-mono text-vintage-gold uppercase tracking-wider font-semibold">PETICIONES EN VIVO</span>
-        <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-white">Pide Tu Canción a Cabina</h2>
-        <p class="text-slate-400 text-sm mt-1">El operador recibe tu solicitud y la añade a la lista de transmisión.</p>
-      </div>
+      <!-- Foro Comunitario -->
+      <section id="foro" class="bg-cardDark border border-cardBorder rounded-2xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="border-b border-cardBorder pb-3 mb-4 flex justify-between items-center">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-comments text-goldAccent"></i> Foro de Oyentes
+            </h2>
+            <span class="text-xs text-gray-400" id="forumCount">0 temas</span>
+          </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        
-        <!-- Formulario de Petición -->
-        <div class="lg:col-span-5 glass-card p-6 rounded-3xl border border-vintage-cardborder space-y-4">
-          <h3 class="font-heading font-bold text-lg text-white flex items-center gap-2">
-            <i class="fa-solid fa-compact-disc text-vintage-gold"></i>
-            <span>Buzón Musical</span>
-          </h3>
-
-          <form id="songReqForm" onsubmit="handleSongSubmit(event)" class="space-y-3">
-            <div>
-              <label class="block text-[11px] font-mono text-slate-400 mb-1">CANCIÓN Y BANDA / ARTISTA</label>
-              <input type="text" id="songNameInput" placeholder="Ej. Hotel California - Eagles" required
-                class="w-full bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 outline-none">
-            </div>
-
-            <div>
-              <label class="block text-[11px] font-mono text-slate-400 mb-1">TU NOMBRE Y DEDICATORIA</label>
-              <input type="text" id="songDedicInput" placeholder="Ej. De parte de Esteban para la gente en San José" required
-                class="w-full bg-slate-900 border border-vintage-cardborder focus:border-vintage-gold rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 outline-none">
-            </div>
-
-            <button type="submit" 
-              class="w-full py-3 rounded-xl bg-gradient-to-r from-vintage-gold to-yellow-500 hover:from-yellow-400 hover:to-vintage-gold text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95">
-              <i class="fa-solid fa-paper-plane"></i>
-              <span>Enviar Pedido Musical</span>
+          <form id="forumForm" onsubmit="handlePostForum(event)" class="space-y-3 mb-6 bg-brandDark/50 p-4 rounded-xl border border-cardBorder">
+            <input type="text" id="forumAuthor" required placeholder="Tu nombre" 
+                   class="w-full bg-cardDark border border-cardBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-goldAccent">
+            <textarea id="forumMessage" required rows="2" placeholder="Publica un comentario o saludo..." 
+                      class="w-full bg-cardDark border border-cardBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-goldAccent resize-none"></textarea>
+            <button type="submit" class="bg-zinc-800 hover:bg-goldAccent hover:text-black text-white font-semibold px-4 py-1.5 rounded-lg text-xs transition">
+              Publicar Mensaje
             </button>
           </form>
-        </div>
 
-        <!-- Historial en vivo de peticiones -->
-        <div class="lg:col-span-7 glass-card p-6 rounded-3xl border border-vintage-cardborder space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="font-heading font-bold text-lg text-white">Cola de Peticiones Recientes</h3>
-            <span id="requestsCountBadge" class="text-xs font-mono text-slate-400">0 solicitudes</span>
-          </div>
-
-          <div id="requestsListContainer" class="space-y-2.5">
-            <!-- Empieza vacío -->
+          <div id="forumPostsList" class="space-y-3 max-h-64 overflow-y-auto">
+            <div id="emptyForumNotice" class="text-xs text-gray-500 text-center py-6">
+              No hay publicaciones aún. Sé el primero en escribir.
+            </div>
           </div>
         </div>
+      </section>
 
-      </div>
+      <!-- Peticiones Musicales -->
+      <section id="peticiones" class="bg-cardDark border border-cardBorder rounded-2xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="border-b border-cardBorder pb-3 mb-4 flex justify-between items-center">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-music text-goldAccent"></i> Peticiones a Cabina
+            </h2>
+            <span class="text-xs text-gray-400" id="requestCount">0 en cola</span>
+          </div>
 
-    </section>
+          <form id="requestForm" onsubmit="handleSongRequest(event)" class="space-y-3 mb-6 bg-brandDark/50 p-4 rounded-xl border border-cardBorder">
+            <div class="grid grid-cols-2 gap-2">
+              <input type="text" id="reqUser" required placeholder="Tu nombre" 
+                     class="w-full bg-cardDark border border-cardBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-goldAccent">
+              <input type="text" id="reqArtist" required placeholder="Artista / Banda" 
+                     class="w-full bg-cardDark border border-cardBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-goldAccent">
+            </div>
+            <input type="text" id="reqSong" required placeholder="Nombre de la canción clásica" 
+                   class="w-full bg-cardDark border border-cardBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-goldAccent">
+            <button type="submit" class="bg-goldAccent hover:bg-goldHover text-black font-bold px-4 py-1.5 rounded-lg text-xs transition">
+              Enviar Petición
+            </button>
+          </form>
 
-    <!-- ============================================================== -->
-    <!-- 5. SECCIÓN PROGRAMACIÓN SEMANAL -->
-    <!-- ============================================================== -->
-    <section id="programacion" class="scroll-mt-24 space-y-6">
-      
-      <div class="border-b border-vintage-cardborder pb-4">
-        <span class="text-xs font-mono text-vintage-gold uppercase tracking-wider font-semibold">PARRILLA OFICIAL</span>
-        <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-white">Programación Semanal</h2>
-        <p class="text-slate-400 text-sm mt-1">Horarios de especiales, décadas temáticas y selecciones de culto (Hora Costa Rica GMT-6).</p>
-      </div>
-
-      <div class="glass-card p-6 rounded-3xl border border-vintage-cardborder space-y-6">
-        
-        <!-- Pestañas de Días -->
-        <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-vintage-cardborder">
-          <button onclick="renderScheduleDay('lunes')" id="sched-lunes" class="sched-btn px-4 py-2 rounded-xl text-xs font-mono font-bold bg-vintage-gold text-slate-950 transition-all">Lunes</button>
-          <button onclick="renderScheduleDay('martes')" id="sched-martes" class="sched-btn px-4 py-2 rounded-xl text-xs font-mono font-bold bg-slate-900 text-slate-400 hover:text-white transition-all">Martes</button>
-          <button onclick="renderScheduleDay('miercoles')" id="sched-miercoles" class="sched-btn px-4 py-2 rounded-xl text-xs font-mono font-bold bg-slate-900 text-slate-400 hover:text-white transition-all">Miércoles</button>
-          <button onclick="renderScheduleDay('jueves')" id="sched-jueves" class="sched-btn px-4 py-2 rounded-xl text-xs font-mono font-bold bg-slate-900 text-slate-400 hover:text-white transition-all">Jueves</button>
-          <button onclick="renderScheduleDay('viernes')" id="sched-viernes" class="sched-btn px-4 py-2 rounded-xl text-xs font-mono font-bold bg-slate-900 text-slate-400 hover:text-white transition-all">Viernes</button>
-          <button onclick="renderScheduleDay('finde')" id="sched-finde" class="sched-btn px-4 py-2 rounded-xl text-xs font-mono font-bold bg-slate-900 text-slate-400 hover:text-white transition-all">Sábado y Domingo</button>
+          <div id="requestQueueList" class="space-y-2 max-h-64 overflow-y-auto">
+            <div id="emptyRequestNotice" class="text-xs text-gray-500 text-center py-6">
+              Buzón libre. Pide una canción para agregarla a la cola.
+            </div>
+          </div>
         </div>
+      </section>
 
-        <!-- Contenedor dinámico de programas -->
-        <div id="scheduleContainer" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <!-- Renderizado vía JS -->
+    </div>
+
+    <!-- SECCIÓN PROGRAMACIÓN -->
+    <section id="programacion" class="bg-cardDark border border-cardBorder rounded-2xl p-6 md:p-8">
+      <h2 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-calendar-days text-goldAccent"></i> Bloques de Transmisión
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+        <div class="bg-brandDark/60 p-4 rounded-xl border border-cardBorder">
+          <span class="text-goldAccent font-bold block mb-1">Mañanas de Oro</span>
+          <p class="text-gray-300 font-medium">06:00 AM - 10:00 AM</p>
+          <p class="text-gray-500 mt-1">Baladas y pop suave de los 60s y 70s.</p>
         </div>
-
+        <div class="bg-brandDark/60 p-4 rounded-xl border border-cardBorder">
+          <span class="text-goldAccent font-bold block mb-1">Ruta Clásica</span>
+          <p class="text-gray-300 font-medium">10:00 AM - 02:00 PM</p>
+          <p class="text-gray-500 mt-1">Rock and Roll, Soul y éxitos inolvidables.</p>
+        </div>
+        <div class="bg-brandDark/60 p-4 rounded-xl border border-cardBorder">
+          <span class="text-goldAccent font-bold block mb-1">Explosión 80s & 90s</span>
+          <p class="text-gray-300 font-medium">02:00 PM - 07:00 PM</p>
+          <p class="text-gray-500 mt-1">New wave, disco y clásicos en inglés.</p>
+        </div>
+        <div class="bg-brandDark/60 p-4 rounded-xl border border-cardBorder">
+          <span class="text-goldAccent font-bold block mb-1">Noche Romántica</span>
+          <p class="text-gray-300 font-medium">07:00 PM - 12:00 MN</p>
+          <p class="text-gray-500 mt-1">Grandes temas lentos y clásicos de colección.</p>
+        </div>
       </div>
-
     </section>
 
   </main>
 
-  <!-- ============================================== -->
-  <!-- PIE DE PÁGINA (FOOTER) -->
-  <!-- ============================================== -->
-  <footer class="mt-16 bg-[#0a0a0e] border-t border-vintage-cardborder text-slate-400 text-xs py-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-      
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-vintage-gold/20 text-vintage-gold flex items-center justify-center font-bold text-base">
-          <i class="fa-solid fa-radio"></i>
-        </div>
-        <div>
-          <span class="font-heading font-extrabold text-white text-sm">Classic Radio CR</span>
-          <p class="text-[11px] text-slate-500">Transmisión independiente sin fines de lucro · San José, Costa Rica</p>
-        </div>
-      </div>
-
-      <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400">
-        <a href="#reproductor" class="hover:text-vintage-gold transition-colors">Transmisión</a>
-        <a href="#oyentes" class="hover:text-vintage-gold transition-colors">Oyentes</a>
-        <a href="#foro" class="hover:text-vintage-gold transition-colors">Foro</a>
-        <a href="#peticiones" class="hover:text-vintage-gold transition-colors">Peticiones</a>
-        <a href="#programacion" class="hover:text-vintage-gold transition-colors">Programación</a>
-      </div>
-
-      <div class="text-center md:text-right font-mono text-[11px] text-slate-600">
-        <p>&copy; 2026 Classic Radio CR. Todos los derechos reservados.</p>
-        <p class="text-slate-500 mt-0.5">Música en Vivo · Décadas de Oro</p>
-      </div>
-
-    </div>
+  <footer class="bg-cardDark border-t border-cardBorder py-6 mt-12 text-center text-xs text-gray-500">
+    <p>&copy; 2026 Classic Radio CR. Música clásica para verdaderos oyentes.</p>
   </footer>
 
-  <!-- ============================================== -->
-  <!-- SCRIPT DE INTERACTIVIDAD & PERSISTENCIA -->
-  <!-- ============================================== -->
   <script>
-    // ESTADO DE REPRODUCCIÓN & CANVAS
-    let isRadioPlaying = false;
-    let masterAudioVolume = 0.85;
-
-    // BASE DE DATOS DE PROGRAMACIÓN
-    const scheduleWeek = {
-      lunes: [
-        { time: '08:00 - 12:00', title: 'Despertar de los 60s', desc: 'The Beatles, The Doors, Beach Boys y los inicios del rock and roll.' },
-        { time: '14:00 - 18:00', title: 'Tardes de Rock Clásico', desc: 'Led Zeppelin, Deep Purple, Creedence y Rolling Stones sin interrupción.' },
-        { time: '20:00 - 23:00', title: 'Baladas Inolvidables', desc: 'Los temas románticos en inglés y español que marcaron décadas.' }
-      ],
-      martes: [
-        { time: '09:00 - 13:00', title: 'Generación 70s', desc: 'Soft rock, soul y la evolución del sonido estéreo analógico.' },
-        { time: '15:00 - 19:00', title: 'Explosión Pop 80s', desc: 'Michael Jackson, Madonna, Tears for Fears y New Wave.' },
-        { time: '20:00 - 00:00', title: 'Noche Progresiva', desc: 'Pink Floyd, Rush, Genesis y Supertramp.' }
-      ],
-      miercoles: [
-        { time: '10:00 - 14:00', title: 'Fiebre Disco & Funk', desc: 'Bee Gees, Donna Summer, Kool & The Gang y Earth Wind & Fire.' },
-        { time: '16:00 - 20:00', title: 'Rock en Español 80s & 90s', desc: 'Soda Stereo, Los Enanitos Verdes, Héroes del Silencio y Hombres G.' }
-      ],
-      jueves: [
-        { time: '08:00 - 12:00', title: 'Ruta Acústica Clásica', desc: 'Eric Clapton, Eagles, Simon & Garfunkel y Cat Stevens.' },
-        { time: '15:00 - 19:00', title: 'One Hit Wonders de Oro', desc: 'Aquellas canciones eternas de una sola banda inolvidable.' }
-      ],
-      viernes: [
-        { time: '14:00 - 18:00', title: 'Viernes de Himnos del Rock', desc: 'Queen, Guns N Roses, Aerosmith y Bon Jovi a todo volumen.' },
-        { time: '19:00 - 02:00', title: 'Fiesta Retro Fin de Semana', desc: 'Mezcla bailable continua de los 70s, 80s y 90s.' }
-      ],
-      finde: [
-        { time: '09:00 - 14:00', title: 'Mañanas de Oro en Familia', desc: 'Clásicos suaves para compartir el fin de semana.' },
-        { time: '16:00 - 22:00', title: 'Conciertos Legendarios', desc: 'Grabaciones en directo en Wembley, Woodstock y Tokio.' }
-      ]
+    let metrics = JSON.parse(localStorage.getItem('cr_metrics')) || {
+      total: 0,
+      countries: [],
+      continents: { centroamerica: 0, norteamerica: 0, sudamerica: 0, europa: 0, otros: 0 },
+      log: []
     };
 
-    // INICIALIZACIÓN GENERAL
-    window.addEventListener('DOMContentLoaded', () => {
-      initClock();
-      initVisualizer();
-      renderListenersData();
-      renderForumList();
-      renderRequestsList();
-      renderScheduleDay('lunes');
-    });
+    let forumPosts = JSON.parse(localStorage.getItem('cr_forum')) || [];
+    let requests = JSON.parse(localStorage.getItem('cr_requests')) || [];
 
-    // Menú móvil
-    function toggleMobileNav() {
-      const menu = document.getElementById('mobileNavMenu');
-      const icon = document.getElementById('navToggleIcon');
-      menu.classList.toggle('hidden');
-      if (menu.classList.contains('hidden')) {
-        icon.className = 'fa-solid fa-bars text-lg';
-      } else {
-        icon.className = 'fa-solid fa-xmark text-lg text-vintage-gold';
+    function updateMetricsUI() {
+      document.getElementById('totalListenersCount').innerText = metrics.total;
+      document.getElementById('totalCountriesCount').innerText = metrics.countries.length;
+
+      for (let c in metrics.continents) {
+        const count = metrics.continents[c];
+        document.getElementById(`cnt-${c}`).innerText = `${count} oyentes`;
+        const percentage = metrics.total > 0 ? (count / metrics.total) * 100 : 0;
+        document.getElementById(`bar-${c}`).style.width = `${percentage}%`;
       }
-    }
 
-    // Reloj local
-    function initClock() {
-      const clockEl = document.getElementById('radioClock');
-      function update() {
-        const d = new Date();
-        clockEl.textContent = d.toLocaleTimeString('es-CR', { hour12: false });
-      }
-      update();
-      setInterval(update, 1000);
-    }
-
-    // Tocadiscos y Reproductor
-    function togglePlayAction() {
-      const vinyl = document.getElementById('vinylDisc');
-      const tonearm = document.getElementById('tonearmElement');
-      const btnIcon = document.getElementById('mainPlayIcon');
-      const btnText = document.getElementById('mainPlayText');
-      const statusText = document.getElementById('vinylStatus');
-
-      isRadioPlaying = !isRadioPlaying;
-
-      if (isRadioPlaying) {
-        vinyl.classList.add('animate-spin-slow');
-        tonearm.classList.add('playing');
-        btnIcon.className = 'fa-solid fa-stop text-lg text-red-500';
-        btnText.textContent = 'Detener Radio';
-        statusText.textContent = 'AL AIRE · EN VIVO';
-        statusText.className = 'text-vintage-gold font-bold';
-
-        showToast('Conectado a la señal de Classic Radio CR', 'fa-solid fa-tower-broadcast');
-      } else {
-        vinyl.classList.remove('animate-spin-slow');
-        tonearm.classList.remove('playing');
-        btnIcon.className = 'fa-solid fa-play text-lg';
-        btnText.textContent = 'Encender Radio';
-        statusText.textContent = 'ESPERANDO SINTONÍA';
-        statusText.className = 'text-slate-400 font-mono';
-
-        showToast('Transmisión en espera', 'fa-solid fa-circle-pause');
-      }
-    }
-
-    function togglePlayerFrame() {
-      const frameContainer = document.getElementById('playerFrameContainer');
-      frameContainer.classList.toggle('hidden');
-    }
-
-    function setAudioVolume(val) {
-      masterAudioVolume = val / 100;
-      document.getElementById('volLabel').textContent = val + '%';
-    }
-
-    // Analizador de Espectro
-    function initVisualizer() {
-      const canvas = document.getElementById('audioVisualizer');
-      const ctx = canvas.getContext('2d');
-
-      function resize() {
-        canvas.width = canvas.parentElement.clientWidth;
-        canvas.height = 48;
-      }
-      resize();
-      window.addEventListener('resize', resize);
-
-      const bars = 32;
-      let phase = 0;
-
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const barWidth = (canvas.width / bars) - 2;
-
-        for (let i = 0; i < bars; i++) {
-          let h;
-          if (isRadioPlaying) {
-            const wave = Math.sin(phase + i * 0.4) * Math.cos(phase * 0.7 + i * 0.15);
-            h = Math.max(4, Math.abs(wave) * (canvas.height - 6) * masterAudioVolume);
-          } else {
-            h = 3 + Math.sin(phase + i * 0.5);
-          }
-
-          const x = i * (barWidth + 2);
-          const y = canvas.height - h;
-
-          const grad = ctx.createLinearGradient(0, canvas.height, 0, 0);
-          grad.addColorStop(0, '#10b981');
-          grad.addColorStop(0.7, '#d4af37');
-          grad.addColorStop(1, '#f3c642');
-
-          ctx.fillStyle = grad;
-          ctx.fillRect(x, y, barWidth, h);
-        }
-
-        phase += isRadioPlaying ? 0.16 : 0.03;
-        requestAnimationFrame(draw);
-      }
-      draw();
-    }
-
-    // ==========================================
-    // MÓDULO OYENTES & REGIONES (INICIA EN 0)
-    // ==========================================
-    function getStoredListeners() {
-      const stored = localStorage.getItem('classic_radio_live_listeners');
-      return stored ? JSON.parse(stored) : { total: 0, countries: {}, regions: {} };
-    }
-
-    function saveStoredListeners(data) {
-      localStorage.setItem('classic_radio_live_listeners', JSON.stringify(data));
-    }
-
-    function renderListenersData() {
-      const data = getStoredListeners();
-      const totalCountEl = document.getElementById('activeListenersCount');
-      const activeCountriesEl = document.getElementById('activeCountriesCount');
-      const topRegionLabel = document.getElementById('topRegionLabel');
-      const topRegionSub = document.getElementById('topRegionSub');
-      const continentsContainer = document.getElementById('continentsContainer');
-      const countriesListContainer = document.getElementById('countriesListContainer');
-      const countriesTotalBadge = document.getElementById('countriesTotalBadge');
-
-      totalCountEl.textContent = data.total;
-      const numCountries = Object.keys(data.countries).length;
-      activeCountriesEl.textContent = numCountries;
-      countriesTotalBadge.textContent = `${numCountries} Países`;
-
-      // Región destacada
-      let bestRegion = 'Sin datos';
-      let bestCount = 0;
-      for (const [reg, c] of Object.entries(data.regions)) {
-        if (c > bestCount) {
-          bestCount = c;
-          bestRegion = reg;
-        }
-      }
-      topRegionLabel.textContent = bestRegion;
-      topRegionSub.textContent = bestCount > 0 ? `${bestCount} oyente(s) en esta región` : 'Esperando los primeros reportes';
-
-      // Continentes
-      const allRegions = ['América Central', 'América del Norte', 'América del Sur', 'Europa', 'Otros'];
-      continentsContainer.innerHTML = '';
-
-      allRegions.forEach(reg => {
-        const count = data.regions[reg] || 0;
-        const pct = data.total > 0 ? Math.round((count / data.total) * 100) : 0;
-
-        const row = document.createElement('div');
-        row.className = 'space-y-1';
-        row.innerHTML = `
-          <div class="flex items-center justify-between text-xs font-mono">
-            <span class="text-slate-300">${reg}</span>
-            <span class="text-slate-400 font-bold">${count} <span class="text-[10px] text-slate-500">(${pct}%)</span></span>
+      const logContainer = document.getElementById('listenersLog');
+      if (metrics.log.length > 0) {
+        logContainer.classList.remove('italic');
+        logContainer.innerHTML = metrics.log.slice(0, 5).map(item => `
+          <div class="flex justify-between border-b border-cardBorder/40 py-1">
+            <span><strong>${item.name}</strong> (${item.city})</span>
+            <span class="text-goldAccent">${item.time}</span>
           </div>
-          <div class="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden">
-            <div class="h-full bg-gradient-to-r from-vintage-gold to-yellow-500 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
-          </div>
-        `;
-        continentsContainer.appendChild(row);
-      });
-
-      // Lista de países
-      countriesListContainer.innerHTML = '';
-      if (numCountries === 0) {
-        countriesListContainer.innerHTML = `
-          <div class="p-6 text-center text-xs font-mono text-slate-500 bg-slate-900/50 rounded-2xl border border-vintage-cardborder/60">
-            Aún no hay oyentes reportados en vivo. Sé el primero presionando "Estoy escuchando ahora".
-          </div>
-        `;
+        `).join('');
       } else {
-        for (const [key, countryData] of Object.entries(data.countries)) {
-          const item = document.createElement('div');
-          item.className = 'p-2.5 rounded-xl bg-slate-900/70 border border-vintage-cardborder flex items-center justify-between text-xs';
-          item.innerHTML = `
-            <div class="flex items-center gap-2">
-              <span class="text-base">${countryData.flag || '📍'}</span>
-              <div>
-                <span class="font-bold text-slate-200 block">${countryData.name}</span>
-                <span class="text-[10px] text-slate-400">${countryData.cities.join(', ')}</span>
-              </div>
-            </div>
-            <span class="font-mono font-bold text-vintage-gold px-2 py-0.5 rounded bg-vintage-gold/10 border border-vintage-gold/20">
-              ${countryData.count}
-            </span>
-          `;
-          countriesListContainer.appendChild(item);
-        }
+        logContainer.classList.add('italic');
+        logContainer.innerHTML = 'Aún no hay reportes de sintonía registrados.';
       }
+
+      localStorage.setItem('cr_metrics', JSON.stringify(metrics));
     }
 
-    function addListener(countryCode, countryName, regionName, cityName, flag) {
-      const data = getStoredListeners();
-      data.total += 1;
+    function handleCheckin(e) {
+      e.preventDefault();
+      const name = document.getElementById('checkinName').value.trim();
+      const city = document.getElementById('checkinCity').value.trim();
+      const continent = document.getElementById('checkinContinent').value;
 
-      // Región
-      data.regions[regionName] = (data.regions[regionName] || 0) + 1;
+      metrics.total++;
+      metrics.continents[continent]++;
+      if (!metrics.countries.includes(continent)) {
+        metrics.countries.push(continent);
+      }
+      
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      metrics.log.unshift({ name, city, time: timeStr });
 
-      // País
-      if (!data.countries[countryCode]) {
-        data.countries[countryCode] = {
-          name: countryName,
-          flag: flag,
-          count: 0,
-          cities: []
+      document.getElementById('checkinForm').reset();
+      updateMetricsUI();
+    }
+
+    function resetMetrics() {
+      if (confirm('¿Deseas reiniciar los contadores a 0?')) {
+        metrics = {
+          total: 0,
+          countries: [],
+          continents: { centroamerica: 0, norteamerica: 0, sudamerica: 0, europa: 0, otros: 0 },
+          log: []
         };
+        updateMetricsUI();
       }
-      data.countries[countryCode].count += 1;
-      if (!data.countries[countryCode].cities.includes(cityName)) {
-        data.countries[countryCode].cities.push(cityName);
-      }
-
-      saveStoredListeners(data);
-      renderListenersData();
     }
 
-    function reportListenerTuning() {
-      // Auto-reporte de sintonía para Costa Rica por defecto
-      addListener('CR', 'Costa Rica', 'América Central', 'San José', '🇨🇷');
-      showToast('¡Gracias! Tu sintonía desde Costa Rica 🇨🇷 fue sumada al conteo.', 'fa-solid fa-satellite-dish');
-    }
+    function updateForumUI() {
+      const container = document.getElementById('forumPostsList');
+      const counter = document.getElementById('forumCount');
+      counter.innerText = `${forumPosts.length} temas`;
 
-    function handleManualTuning(e) {
-      e.preventDefault();
-      const city = document.getElementById('manualCity').value.trim();
-      const selVal = document.getElementById('manualCountry').value;
-      const [code, region, fullName] = selVal.split('|');
-      const flag = fullName.split(' ')[0];
-      const countryName = fullName.replace(flag, '').trim();
-
-      if (!city) return;
-
-      addListener(code, countryName, region, city, flag);
-      showToast(`¡Reporte registrado desde ${city}, ${countryName}!`, 'fa-solid fa-check');
-      document.getElementById('manualCity').value = '';
-    }
-
-    function resetListenersCounter() {
-      localStorage.removeItem('classic_radio_live_listeners');
-      renderListenersData();
-      showToast('Contadores de oyentes reiniciados a 0.', 'fa-solid fa-rotate-left');
-    }
-
-    // ==========================================
-    // MÓDULO FORO (EMPIEZA LIMPIO)
-    // ==========================================
-    function getStoredForum() {
-      const stored = localStorage.getItem('classic_radio_forum_posts');
-      return stored ? JSON.parse(stored) : [];
-    }
-
-    function saveStoredForum(posts) {
-      localStorage.setItem('classic_radio_forum_posts', JSON.stringify(posts));
-    }
-
-    let activeFilter = 'todas';
-
-    function renderForumList() {
-      const container = document.getElementById('forumListContainer');
-      container.innerHTML = '';
-      const posts = getStoredForum();
-
-      const filtered = activeFilter === 'todas' 
-        ? posts 
-        : posts.filter(p => p.category === activeFilter);
-
-      if (filtered.length === 0) {
-        container.innerHTML = `
-          <div class="glass-card p-10 rounded-3xl border border-vintage-cardborder text-center space-y-2">
-            <i class="fa-solid fa-comments text-3xl text-slate-600 mb-1"></i>
-            <h4 class="font-heading font-bold text-slate-300 text-sm">Aún no hay temas publicados</h4>
-            <p class="text-xs text-slate-500 font-mono">¡Sé el primero en iniciar una conversación musical en cabina!</p>
-          </div>
-        `;
+      if (forumPosts.length === 0) {
+        container.innerHTML = '<div class="text-xs text-gray-500 text-center py-6">No hay publicaciones aún. Sé el primero en escribir.</div>';
         return;
       }
 
-      filtered.forEach(post => {
-        const item = document.createElement('div');
-        item.className = 'glass-card p-5 rounded-2xl border border-vintage-cardborder space-y-3';
-        item.innerHTML = `
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <h4 class="font-bold text-white text-sm leading-snug">${post.title}</h4>
-              <div class="flex items-center gap-2 text-[11px] text-slate-400 font-mono mt-1">
-                <span>Por <strong class="text-slate-200">${post.author}</strong></span>
-                <span>•</span>
-                <span>${post.date}</span>
-              </div>
-            </div>
-            <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-vintage-gold/15 text-vintage-gold border border-vintage-gold/25 uppercase">
-              ${post.category}
-            </span>
+      container.innerHTML = forumPosts.map(p => `
+        <div class="bg-brandDark/60 p-3 rounded-lg border border-cardBorder text-xs space-y-1">
+          <div class="flex justify-between text-gray-400">
+            <strong class="text-white">${p.author}</strong>
+            <span class="text-[10px]">${p.time}</span>
           </div>
-
-          <p class="text-xs text-slate-300 leading-relaxed">${post.message}</p>
-
-          <div class="flex items-center justify-between pt-2 border-t border-vintage-cardborder/50 text-xs">
-            <button onclick="likeForumPost('${post.id}')" class="flex items-center gap-1.5 ${post.liked ? 'text-red-400 font-bold' : 'text-slate-400 hover:text-red-400'} transition-colors">
-              <i class="fa-${post.liked ? 'solid' : 'regular'} fa-heart"></i>
-              <span>${post.likes} Me gusta</span>
-            </button>
-
-            <button onclick="replyToTopic('${post.author}')" class="text-slate-400 hover:text-vintage-gold flex items-center gap-1.5 transition-colors">
-              <i class="fa-regular fa-comment"></i>
-              <span>Responder</span>
-            </button>
-          </div>
-        `;
-        container.appendChild(item);
-      });
+          <p class="text-gray-300">${p.text}</p>
+        </div>
+      `).join('');
+      localStorage.setItem('cr_forum', JSON.stringify(forumPosts));
     }
 
-    function handleNewForumPost(e) {
+    function handlePostForum(e) {
       e.preventDefault();
-      const title = document.getElementById('forumTitleInput').value.trim();
-      const author = document.getElementById('forumAuthorInput').value.trim();
-      const category = document.getElementById('forumCategoryInput').value;
-      const message = document.getElementById('forumMessageInput').value.trim();
+      const author = document.getElementById('forumAuthor').value.trim();
+      const text = document.getElementById('forumMessage').value.trim();
+      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-      if (!title || !author || !message) return;
-
-      const newPost = {
-        id: 'post_' + Date.now(),
-        title: title,
-        author: author,
-        category: category,
-        message: message,
-        date: 'Hace un momento',
-        likes: 1,
-        liked: true
-      };
-
-      const posts = getStoredForum();
-      posts.unshift(newPost);
-      saveStoredForum(posts);
-      renderForumList();
-
-      e.target.reset();
-      showToast('¡Tema publicado con éxito en el foro!', 'fa-solid fa-comment-dots');
+      forumPosts.unshift({ author, text, time });
+      document.getElementById('forumForm').reset();
+      updateForumUI();
     }
 
-    function likeForumPost(id) {
-      const posts = getStoredForum();
-      const target = posts.find(p => p.id === id);
-      if (target) {
-        target.liked = !target.liked;
-        target.likes += target.liked ? 1 : -1;
-        saveStoredForum(posts);
-        renderForumList();
-      }
-    }
+    function updateRequestsUI() {
+      const container = document.getElementById('requestQueueList');
+      const counter = document.getElementById('requestCount');
+      counter.innerText = `${requests.length} en cola`;
 
-    function replyToTopic(author) {
-      document.getElementById('forumMessageInput').focus();
-      document.getElementById('forumMessageInput').value = `@${author}: `;
-      showToast(`Respondiendo a ${author}...`, 'fa-solid fa-reply');
-    }
-
-    function filterForum(cat) {
-      activeFilter = cat;
-      const tabs = ['todas', '60s', '70s', '80s', '90s'];
-      tabs.forEach(t => {
-        const btn = document.getElementById(`filter-${t}`);
-        if (btn) {
-          if (t === cat) {
-            btn.className = 'px-3 py-1.5 rounded-lg bg-vintage-gold text-slate-950 font-bold transition-all';
-          } else {
-            btn.className = 'px-3 py-1.5 rounded-lg bg-vintage-card text-slate-300 hover:text-white border border-vintage-cardborder transition-all';
-          }
-        }
-      });
-      renderForumList();
-    }
-
-    // ==========================================
-    // MÓDULO PETICIONES (EMPIEZA LIMPIO)
-    // ==========================================
-    function getStoredRequests() {
-      const stored = localStorage.getItem('classic_radio_song_requests');
-      return stored ? JSON.parse(stored) : [];
-    }
-
-    function saveStoredRequests(list) {
-      localStorage.setItem('classic_radio_song_requests', JSON.stringify(list));
-    }
-
-    function renderRequestsList() {
-      const container = document.getElementById('requestsListContainer');
-      const countBadge = document.getElementById('requestsCountBadge');
-      container.innerHTML = '';
-      const list = getStoredRequests();
-
-      countBadge.textContent = `${list.length} solicitudes`;
-
-      if (list.length === 0) {
-        container.innerHTML = `
-          <div class="p-8 text-center text-xs font-mono text-slate-500 bg-slate-900/40 rounded-2xl border border-vintage-cardborder/60">
-            No hay peticiones recientes en cola. ¡Envía tu clásico preferido!
-          </div>
-        `;
+      if (requests.length === 0) {
+        container.innerHTML = '<div class="text-xs text-gray-500 text-center py-6">Buzón libre. Pide una canción para agregarla a la cola.</div>';
         return;
       }
 
-      list.forEach(req => {
-        const row = document.createElement('div');
-        row.className = 'p-3 rounded-xl bg-slate-900/70 border border-vintage-cardborder flex items-center justify-between gap-3 text-xs';
-        row.innerHTML = `
+      container.innerHTML = requests.map(r => `
+        <div class="bg-brandDark/60 p-2.5 rounded-lg border border-cardBorder text-xs flex justify-between items-center">
           <div>
-            <span class="font-bold text-white block">${req.song}</span>
-            <span class="text-slate-400 text-[11px]">${req.dedication}</span>
+            <strong class="text-white">${r.song}</strong> - <span class="text-gray-300">${r.artist}</span>
+            <div class="text-[10px] text-gray-500">Pedido por ${r.user}</div>
           </div>
-          <span class="text-vintage-gold font-mono text-[10px] whitespace-nowrap bg-vintage-gold/10 px-2 py-0.5 rounded border border-vintage-gold/20">
-            ${req.time}
-          </span>
-        `;
-        container.appendChild(row);
-      });
+          <span class="text-[10px] bg-zinc-800 text-goldAccent px-2 py-0.5 rounded font-mono">Pendiente</span>
+        </div>
+      `).join('');
+      localStorage.setItem('cr_requests', JSON.stringify(requests));
     }
 
-    function handleSongSubmit(e) {
+    function handleSongRequest(e) {
       e.preventDefault();
-      const song = document.getElementById('songNameInput').value.trim();
-      const dedication = document.getElementById('songDedicInput').value.trim();
+      const user = document.getElementById('reqUser').value.trim();
+      const artist = document.getElementById('reqArtist').value.trim();
+      const song = document.getElementById('reqSong').value.trim();
 
-      if (!song) return;
-
-      const list = getStoredRequests();
-      list.unshift({
-        song: song,
-        dedication: dedication || 'Pedido a cabina',
-        time: 'Justo ahora'
-      });
-
-      if (list.length > 8) list.pop();
-      saveStoredRequests(list);
-      renderRequestsList();
-
-      e.target.reset();
-      showToast('¡Petición enviada al operador de Classic Radio CR!', 'fa-solid fa-music');
+      requests.unshift({ user, artist, song });
+      document.getElementById('requestForm').reset();
+      updateRequestsUI();
     }
 
-    // ==========================================
-    // PARRILLA SEMANAL DE PROGRAMACIÓN
-    // ==========================================
-    function renderScheduleDay(day) {
-      const tabs = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'finde'];
-      tabs.forEach(t => {
-        const b = document.getElementById(`sched-${t}`);
-        if (b) {
-          if (t === day) {
-            b.className = 'sched-btn px-4 py-2 rounded-xl text-xs font-mono font-bold bg-vintage-gold text-slate-950 transition-all';
-          } else {
-            b.className = 'sched-btn px-4 py-2 rounded-xl text-xs font-mono font-bold bg-slate-900 text-slate-400 hover:text-white transition-all';
-          }
-        }
-      });
-
-      const container = document.getElementById('scheduleContainer');
-      container.innerHTML = '';
-      const shows = scheduleWeek[day] || [];
-
-      shows.forEach(show => {
-        const card = document.createElement('div');
-        card.className = 'p-4 rounded-2xl bg-slate-900/80 border border-vintage-cardborder flex flex-col justify-between space-y-2';
-        card.innerHTML = `
-          <div>
-            <span class="text-[11px] font-mono font-bold text-vintage-gold bg-vintage-gold/10 px-2 py-0.5 rounded border border-vintage-gold/20 inline-block mb-1.5">
-              ${show.time}
-            </span>
-            <h4 class="font-bold text-white text-sm">${show.title}</h4>
-            <p class="text-xs text-slate-400 mt-1">${show.desc}</p>
-          </div>
-          <div class="pt-2 border-t border-slate-800/60 text-[10px] font-mono text-slate-500 flex items-center gap-1.5">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Señal en Directo
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    // ==========================================
-    // NOTIFICACIÓN TOAST
-    // ==========================================
-    let toastTimeout = null;
-    function showToast(msg, icon = 'fa-solid fa-circle-check') {
-      const box = document.getElementById('toastNotification');
-      const text = document.getElementById('toastMsg');
-      const ic = document.getElementById('toastIcon');
-
-      text.textContent = msg;
-      ic.className = `${icon} text-vintage-gold text-lg`;
-
-      box.classList.remove('translate-y-32', 'opacity-0');
-      box.classList.add('translate-y-0', 'opacity-100');
-
-      if (toastTimeout) clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => {
-        box.classList.remove('translate-y-0', 'opacity-100');
-        box.classList.add('translate-y-32', 'opacity-0');
-      }, 3500);
-    }
+    updateMetricsUI();
+    updateForumUI();
+    updateRequestsUI();
   </script>
 </body>
 </html>
