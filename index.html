@@ -26,6 +26,10 @@
     .vinyl-spin { animation: spin 4s linear infinite; }
     @keyframes spin { 100% { transform: rotate(360deg); } }
   </style>
+
+  <!-- SDKs de Firebase compatibles con navegador directo -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </head>
 <body class="bg-brandDark text-gray-200 min-h-screen flex flex-col font-sans">
 
@@ -54,11 +58,11 @@
 
   <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full space-y-12">
 
-    <!-- SECCIÓN REPRODUCTOR POP-UP (NO ABANDONA LA PÁGINA) -->
+    <!-- SECCIÓN REPRODUCTOR POP-UP -->
     <section id="reproductor" class="bg-cardDark border border-cardBorder rounded-2xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
         
-        <!-- Tornamesa Vintage Animada -->
+        <!-- Tornamesa -->
         <div class="flex flex-col items-center justify-center p-6 bg-brandDark/70 rounded-xl border border-cardBorder">
           <div class="relative w-52 h-52 flex items-center justify-center">
             <div id="vinylDisc" class="w-48 h-48 rounded-full bg-zinc-950 border-4 border-zinc-800 flex items-center justify-center shadow-2xl relative transition-transform">
@@ -78,7 +82,7 @@
           </div>
         </div>
 
-        <!-- Panel de Control y Lanzador -->
+        <!-- Panel de Control -->
         <div class="flex flex-col justify-center space-y-4 text-center lg:text-left">
           <span class="text-xs uppercase font-bold tracking-widest text-goldAccent">Emisión Oficial</span>
           <h2 class="text-2xl md:text-3xl font-bold text-white">Lo Mejor de los 60s, 70s, 80s y 90s</h2>
@@ -109,29 +113,35 @@
       </div>
     </section>
 
-    <!-- SECCIÓN OYENTES POR CONTINENTE -->
+    <!-- SECCIÓN OYENTES Y MÉTRICAS -->
     <section id="oyentes" class="bg-cardDark border border-cardBorder rounded-2xl p-6 md:p-8">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-cardBorder pb-4 mb-6">
         <div>
           <h2 class="text-xl font-bold text-white flex items-center gap-2">
             <i class="fa-solid fa-earth-americas text-goldAccent"></i> Registro y Métricas de Oyentes
           </h2>
-          <p class="text-sm text-gray-400">Desglose geográfico en tiempo real.</p>
+          <p class="text-sm text-gray-400">Desglose geográfico en tiempo real sincronizado en la nube.</p>
         </div>
         <div class="flex gap-4">
+          <!-- Oyentes en vivo en la web (Automático) -->
+          <div class="bg-brandDark px-4 py-2 rounded-xl border border-cardBorder text-center">
+            <div class="flex items-center justify-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-xl font-bold text-emerald-400" id="liveVisitorsCount">1</span>
+            </div>
+            <span class="text-[11px] text-gray-400 uppercase tracking-wider">En Línea Ahora</span>
+          </div>
+
+          <!-- Total de sintonías reportadas -->
           <div class="bg-brandDark px-4 py-2 rounded-xl border border-cardBorder text-center">
             <span class="block text-xl font-bold text-goldAccent" id="totalListenersCount">0</span>
-            <span class="text-[11px] text-gray-400 uppercase tracking-wider">Oyentes Totales</span>
-          </div>
-          <div class="bg-brandDark px-4 py-2 rounded-xl border border-cardBorder text-center">
-            <span class="block text-xl font-bold text-emerald-400" id="totalCountriesCount">0</span>
-            <span class="text-[11px] text-gray-400 uppercase tracking-wider">Regiones</span>
+            <span class="text-[11px] text-gray-400 uppercase tracking-wider">Sintonías Registradas</span>
           </div>
         </div>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Formulario -->
+        <!-- Formulario de sintonía -->
         <div class="bg-brandDark/70 p-5 rounded-xl border border-cardBorder flex flex-col justify-between">
           <div>
             <h3 class="text-sm font-bold text-white mb-3">📍 Reportar mi Sintonía</h3>
@@ -157,15 +167,12 @@
                   <option value="otros">Otros</option>
                 </select>
               </div>
-              <button type="submit" 
+              <button type="submit" id="checkinBtn"
                       class="w-full bg-goldAccent hover:bg-goldHover text-black font-bold py-2 rounded-lg text-sm transition mt-2">
                 Reportar Sintonía
               </button>
             </form>
           </div>
-          <button onclick="resetMetrics()" class="text-[11px] text-gray-500 hover:text-gray-300 text-center mt-4 underline">
-            Reiniciar contadores a 0
-          </button>
         </div>
 
         <!-- Barras por Continente -->
@@ -222,9 +229,9 @@
           </div>
 
           <div class="mt-6 border-t border-cardBorder pt-4">
-            <h4 class="text-xs font-bold text-gray-300 mb-2">Últimos reportes recibidos:</h4>
+            <h4 class="text-xs font-bold text-gray-300 mb-2">Últimos reportes recibidos (Global):</h4>
             <div id="listenersLog" class="text-xs text-gray-500 italic max-h-24 overflow-y-auto space-y-1">
-              Aún no hay reportes de sintonía registrados.
+              Cargando sintonías...
             </div>
           </div>
         </div>
@@ -234,7 +241,7 @@
     <!-- SECCIÓN FORO Y PETICIONES -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       
-      <!-- Foro Comunitario -->
+      <!-- Foro Comunitario en Tiempo Real -->
       <section id="foro" class="bg-cardDark border border-cardBorder rounded-2xl p-6 flex flex-col justify-between">
         <div>
           <div class="border-b border-cardBorder pb-3 mb-4 flex justify-between items-center">
@@ -245,24 +252,24 @@
           </div>
 
           <form id="forumForm" onsubmit="handlePostForum(event)" class="space-y-3 mb-6 bg-brandDark/50 p-4 rounded-xl border border-cardBorder">
-            <input type="text" id="forumAuthor" required placeholder="Tu nombre" 
+            <input type="text" id="forumAuthor" required placeholder="Tu nombre o apodo" 
                    class="w-full bg-cardDark border border-cardBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-goldAccent">
-            <textarea id="forumMessage" required rows="2" placeholder="Publica un comentario, memoria o saludo..." 
+            <textarea id="forumMessage" required rows="2" placeholder="Escribe un mensaje en vivo..." 
                       class="w-full bg-cardDark border border-cardBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-goldAccent resize-none"></textarea>
-            <button type="submit" class="bg-zinc-800 hover:bg-goldAccent hover:text-black text-white font-semibold px-4 py-1.5 rounded-lg text-xs transition">
+            <button type="submit" id="forumSubmitBtn" class="bg-zinc-800 hover:bg-goldAccent hover:text-black text-white font-semibold px-4 py-1.5 rounded-lg text-xs transition">
               Publicar Mensaje
             </button>
           </form>
 
           <div id="forumPostsList" class="space-y-3 max-h-64 overflow-y-auto">
             <div id="emptyForumNotice" class="text-xs text-gray-500 text-center py-6">
-              No hay publicaciones aún. Sé el primero en iniciar una conversación.
+              Cargando mensajes en vivo...
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Peticiones Musicales -->
+      <!-- Peticiones Musicales en Tiempo Real -->
       <section id="peticiones" class="bg-cardDark border border-cardBorder rounded-2xl p-6 flex flex-col justify-between">
         <div>
           <div class="border-b border-cardBorder pb-3 mb-4 flex justify-between items-center">
@@ -279,16 +286,16 @@
               <input type="text" id="reqArtist" required placeholder="Artista / Banda" 
                      class="w-full bg-cardDark border border-cardBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-goldAccent">
             </div>
-            <input type="text" id="reqSong" required placeholder="Nombre de la canción clásica" 
+            <input type="text" id="reqSong" required placeholder="Canción clásica" 
                    class="w-full bg-cardDark border border-cardBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-goldAccent">
-            <button type="submit" class="bg-goldAccent hover:bg-goldHover text-black font-bold px-4 py-1.5 rounded-lg text-xs transition">
+            <button type="submit" id="requestSubmitBtn" class="bg-goldAccent hover:bg-goldHover text-black font-bold px-4 py-1.5 rounded-lg text-xs transition">
               Enviar Petición
             </button>
           </form>
 
           <div id="requestQueueList" class="space-y-2 max-h-64 overflow-y-auto">
             <div id="emptyRequestNotice" class="text-xs text-gray-500 text-center py-6">
-              Buzón libre. Pide una canción para agregarla a la cola.
+              Cargando peticiones en vivo...
             </div>
           </div>
         </div>
@@ -332,7 +339,20 @@
   </footer>
 
   <script>
-    // FUNCIÓN DE MINI-CONSOLA FLOTANTE
+    // 1. CONFIGURACIÓN E INICIALIZACIÓN DE FIREBASE
+    const firebaseConfig = {
+      apiKey: "AIzaSyCzla79Nuil-4Xo7UmSdfjY4CtaSIf1aVw",
+      authDomain: "classicradiocr.firebaseapp.com",
+      projectId: "classicradiocr",
+      storageBucket: "classicradiocr.firebasestorage.app",
+      messagingSenderId: "788106859236",
+      appId: "1:788106859236:web:bcfbda1711cc5c4e8ad2f1"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // 2. MINI-CONSOLA FLOTANTE
     function launchMiniPlayer() {
       const url = "http://classicradiocr.radio12345.com/";
       const width = 450;
@@ -340,161 +360,210 @@
       const left = window.screen.width - width - 50;
       const top = 100;
 
-      // Abre mini-reproductor sin sacar al usuario de la web
       window.open(
         url, 
         'ClassicRadioMiniPlayer', 
         `width=${width},height=${height},top=${top},left=${left},scrollbars=no,resizable=yes`
       );
 
-      // Activa animación visual en la página principal
       document.getElementById('vinylDisc').classList.add('vinyl-spin');
       document.getElementById('playerStateText').innerText = "Transmisión Activa";
       document.getElementById('playerStateText').classList.add('text-emerald-400');
     }
 
-    // GESTIÓN DE MÉTRICAS
-    let metrics = JSON.parse(localStorage.getItem('cr_metrics')) || {
-      total: 0,
-      countries: [],
-      continents: { centroamerica: 0, norteamerica: 0, sudamerica: 0, europa: 0, otros: 0 },
-      log: []
-    };
+    // 3. PRESENCIA EN VIVO AUTOMÁTICA
+    const sessionId = 'usr_' + Math.random().toString(36).substring(2, 10);
+    const presenceRef = db.collection('online_listeners').doc(sessionId);
 
-    let forumPosts = JSON.parse(localStorage.getItem('cr_forum')) || [];
-    let requests = JSON.parse(localStorage.getItem('cr_requests')) || [];
-
-    function updateMetricsUI() {
-      document.getElementById('totalListenersCount').innerText = metrics.total;
-      document.getElementById('totalCountriesCount').innerText = metrics.countries.length;
-
-      for (let c in metrics.continents) {
-        const count = metrics.continents[c];
-        document.getElementById(`cnt-${c}`).innerText = `${count} oyentes`;
-        const percentage = metrics.total > 0 ? (count / metrics.total) * 100 : 0;
-        document.getElementById(`bar-${c}`).style.width = `${percentage}%`;
-      }
-
-      const logContainer = document.getElementById('listenersLog');
-      if (metrics.log.length > 0) {
-        logContainer.classList.remove('italic');
-        logContainer.innerHTML = metrics.log.slice(0, 5).map(item => `
-          <div class="flex justify-between border-b border-cardBorder/40 py-1">
-            <span><strong>${item.name}</strong> (${item.city})</span>
-            <span class="text-goldAccent">${item.time}</span>
-          </div>
-        `).join('');
-      } else {
-        logContainer.classList.add('italic');
-        logContainer.innerHTML = 'Aún no hay reportes de sintonía registrados.';
-      }
-
-      localStorage.setItem('cr_metrics', JSON.stringify(metrics));
+    function keepAlive() {
+      presenceRef.set({ lastSeen: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
     }
+    keepAlive();
+    setInterval(keepAlive, 25000);
 
-    function handleCheckin(e) {
-      e.preventDefault();
-      const name = document.getElementById('checkinName').value.trim();
-      const city = document.getElementById('checkinCity').value.trim();
-      const continent = document.getElementById('checkinContinent').value;
+    window.addEventListener('beforeunload', () => {
+      presenceRef.delete();
+    });
 
-      metrics.total++;
-      metrics.continents[continent]++;
-      if (!metrics.countries.includes(continent)) {
-        metrics.countries.push(continent);
-      }
-      
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      metrics.log.unshift({ name, city, time: timeStr });
+    db.collection('online_listeners').onSnapshot(snapshot => {
+      const activeCount = snapshot.docs.length;
+      document.getElementById('liveVisitorsCount').innerText = activeCount > 0 ? activeCount : 1;
+    });
 
-      document.getElementById('checkinForm').reset();
-      updateMetricsUI();
-    }
+    // 4. FORO EN TIEMPO REAL
+    const forumForm = document.getElementById('forumForm');
+    const forumPostsList = document.getElementById('forumPostsList');
+    const forumCount = document.getElementById('forumCount');
 
-    function resetMetrics() {
-      if (confirm('¿Deseas reiniciar los contadores a 0?')) {
-        metrics = {
-          total: 0,
-          countries: [],
-          continents: { centroamerica: 0, norteamerica: 0, sudamerica: 0, europa: 0, otros: 0 },
-          log: []
-        };
-        updateMetricsUI();
-      }
-    }
+    db.collection('forum_posts')
+      .orderBy('timestamp', 'desc')
+      .limit(30)
+      .onSnapshot(snapshot => {
+        forumCount.innerText = `${snapshot.size} temas`;
+        if (snapshot.empty) {
+          forumPostsList.innerHTML = '<div class="text-xs text-gray-500 text-center py-6">No hay mensajes aún. ¡Sé el primero en saludar!</div>';
+          return;
+        }
 
-    // FORO
-    function updateForumUI() {
-      const container = document.getElementById('forumPostsList');
-      const counter = document.getElementById('forumCount');
-      counter.innerText = `${forumPosts.length} temas`;
+        forumPostsList.innerHTML = snapshot.docs.map(doc => {
+          const data = doc.data();
+          const time = data.timestamp ? new Date(data.timestamp.toDate()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Ahora';
+          return `
+            <div class="bg-brandDark/60 p-3 rounded-lg border border-cardBorder text-xs space-y-1">
+              <div class="flex justify-between text-gray-400">
+                <strong class="text-white">${data.author}</strong>
+                <span class="text-[10px]">${time}</span>
+              </div>
+              <p class="text-gray-300">${data.message}</p>
+            </div>
+          `;
+        }).join('');
+      });
 
-      if (forumPosts.length === 0) {
-        container.innerHTML = '<div class="text-xs text-gray-500 text-center py-6">No hay publicaciones aún. Sé el primero en iniciar una conversación.</div>';
-        return;
-      }
-
-      container.innerHTML = forumPosts.map(p => `
-        <div class="bg-brandDark/60 p-3 rounded-lg border border-cardBorder text-xs space-y-1">
-          <div class="flex justify-between text-gray-400">
-            <strong class="text-white">${p.author}</strong>
-            <span class="text-[10px]">${p.time}</span>
-          </div>
-          <p class="text-gray-300">${p.text}</p>
-        </div>
-      `).join('');
-      localStorage.setItem('cr_forum', JSON.stringify(forumPosts));
-    }
-
-    function handlePostForum(e) {
+    async function handlePostForum(e) {
       e.preventDefault();
       const author = document.getElementById('forumAuthor').value.trim();
-      const text = document.getElementById('forumMessage').value.trim();
-      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const message = document.getElementById('forumMessage').value.trim();
+      const btn = document.getElementById('forumSubmitBtn');
 
-      forumPosts.unshift({ author, text, time });
-      document.getElementById('forumForm').reset();
-      updateForumUI();
-    }
+      if (!author || !message) return;
+      btn.disabled = true;
 
-    // PETICIONES
-    function updateRequestsUI() {
-      const container = document.getElementById('requestQueueList');
-      const counter = document.getElementById('requestCount');
-      counter.innerText = `${requests.length} en cola`;
-
-      if (requests.length === 0) {
-        container.innerHTML = '<div class="text-xs text-gray-500 text-center py-6">Buzón libre. Pide una canción para agregarla a la cola.</div>';
-        return;
+      try {
+        await db.collection('forum_posts').add({
+          author,
+          message,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        document.getElementById('forumMessage').value = '';
+      } catch (err) {
+        alert('Error al publicar. Revisa que Firestore esté habilitado en modo prueba.');
+      } finally {
+        btn.disabled = false;
       }
-
-      container.innerHTML = requests.map(r => `
-        <div class="bg-brandDark/60 p-2.5 rounded-lg border border-cardBorder text-xs flex justify-between items-center">
-          <div>
-            <strong class="text-white">${r.song}</strong> - <span class="text-gray-300">${r.artist}</span>
-            <div class="text-[10px] text-gray-500">Pedido por ${r.user}</div>
-          </div>
-          <span class="text-[10px] bg-zinc-800 text-goldAccent px-2 py-0.5 rounded font-mono">Pendiente</span>
-        </div>
-      `).join('');
-      localStorage.setItem('cr_requests', JSON.stringify(requests));
     }
 
-    function handleSongRequest(e) {
+    // 5. PETICIONES EN TIEMPO REAL
+    const requestForm = document.getElementById('requestForm');
+    const requestQueueList = document.getElementById('requestQueueList');
+    const requestCount = document.getElementById('requestCount');
+
+    db.collection('song_requests')
+      .orderBy('timestamp', 'desc')
+      .limit(30)
+      .onSnapshot(snapshot => {
+        requestCount.innerText = `${snapshot.size} en cola`;
+        if (snapshot.empty) {
+          requestQueueList.innerHTML = '<div class="text-xs text-gray-500 text-center py-6">Buzón libre. Pide una canción clásica.</div>';
+          return;
+        }
+
+        requestQueueList.innerHTML = snapshot.docs.map(doc => {
+          const data = doc.data();
+          return `
+            <div class="bg-brandDark/60 p-2.5 rounded-lg border border-cardBorder text-xs flex justify-between items-center">
+              <div>
+                <strong class="text-white">${data.song}</strong> - <span class="text-gray-300">${data.artist}</span>
+                <div class="text-[10px] text-gray-500">Pedido por ${data.user}</div>
+              </div>
+              <span class="text-[10px] bg-zinc-800 text-goldAccent px-2 py-0.5 rounded font-mono">Pendiente</span>
+            </div>
+          `;
+        }).join('');
+      });
+
+    async function handleSongRequest(e) {
       e.preventDefault();
       const user = document.getElementById('reqUser').value.trim();
       const artist = document.getElementById('reqArtist').value.trim();
       const song = document.getElementById('reqSong').value.trim();
+      const btn = document.getElementById('requestSubmitBtn');
 
-      requests.unshift({ user, artist, song });
-      document.getElementById('requestForm').reset();
-      updateRequestsUI();
+      if (!user || !artist || !song) return;
+      btn.disabled = true;
+
+      try {
+        await db.collection('song_requests').add({
+          user,
+          artist,
+          song,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        document.getElementById('reqSong').value = '';
+      } catch (err) {
+        alert('Error al enviar la petición. Revisa los permisos de Firestore.');
+      } finally {
+        btn.disabled = false;
+      }
     }
 
-    updateMetricsUI();
-    updateForumUI();
-    updateRequestsUI();
+    // 6. SINTONÍAS Y MÉTRICAS GLOBALES
+    db.collection('listener_checkins')
+      .orderBy('timestamp', 'desc')
+      .limit(10)
+      .onSnapshot(snapshot => {
+        const total = snapshot.size;
+        const logContainer = document.getElementById('listenersLog');
+        
+        if (snapshot.empty) {
+          logContainer.innerHTML = 'Aún no hay sintonías registradas hoy.';
+          return;
+        }
+
+        let continents = { centroamerica: 0, norteamerica: 0, sudamerica: 0, europa: 0, otros: 0 };
+        let entries = [];
+
+        snapshot.docs.forEach(doc => {
+          const data = doc.data();
+          if (continents[data.continent] !== undefined) {
+            continents[data.continent]++;
+          }
+          const time = data.timestamp ? new Date(data.timestamp.toDate()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Reciente';
+          entries.push(`
+            <div class="flex justify-between border-b border-cardBorder/40 py-1">
+              <span><strong>${data.name}</strong> (${data.city})</span>
+              <span class="text-goldAccent">${time}</span>
+            </div>
+          `);
+        });
+
+        document.getElementById('totalListenersCount').innerText = snapshot.size;
+
+        for (let c in continents) {
+          const count = continents[c];
+          document.getElementById(`cnt-${c}`).innerText = `${count} oyentes`;
+          const percentage = total > 0 ? (count / total) * 100 : 0;
+          document.getElementById(`bar-${c}`).style.width = `${percentage}%`;
+        }
+
+        logContainer.classList.remove('italic');
+        logContainer.innerHTML = entries.slice(0, 5).join('');
+      });
+
+    async function handleCheckin(e) {
+      e.preventDefault();
+      const name = document.getElementById('checkinName').value.trim();
+      const city = document.getElementById('checkinCity').value.trim();
+      const continent = document.getElementById('checkinContinent').value;
+      const btn = document.getElementById('checkinBtn');
+
+      if (!name || !city) return;
+      btn.disabled = true;
+
+      try {
+        await db.collection('listener_checkins').add({
+          name,
+          city,
+          continent,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        document.getElementById('checkinForm').reset();
+      } catch (err) {
+        alert('Error al reportar sintonía.');
+      } finally {
+        btn.disabled = false;
+      }
+    }
   </script>
 </body>
 </html>
